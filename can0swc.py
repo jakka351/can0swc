@@ -16,7 +16,7 @@ GPIO.setwarnings(False)
 GPIO.setup(led,GPIO.OUT)
 GPIO.output(led,True)
 
-# simulated keypresses setup for openauto
+# simulated keypresses setup for openauto # modify this segment to define keyboard keys
 device = uinput.Device([
         uinput.KEY_NEXTSONG,
         uinput.KEY_PREVIOUSSONG,
@@ -28,7 +28,11 @@ device = uinput.Device([
         uinput.KEY_O,
 ])
 
-# add full can data
+# modify this segment to define can frame data segment to listen for
+#the script works by filtering can frames and printing all frames from a specific can id
+# swc = the can id you want to listen for
+# swc_x = a single byte out of the data of the frame eg 123#DEADBEEF swc_beef=F
+
 SWC_SEEK               = 0x09 #frame 8
 SWC_SEEKHOLD           = 0x09 #frame 8
 SWC_VOLUP              = 0x11 #frame 8
