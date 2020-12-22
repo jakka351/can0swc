@@ -5,18 +5,25 @@
   
    
    ### Work in progress ###
-  Basic python script that filters for a specific can id and then listens for specific data frames from that can id, then does an action. CANbus data used is for a mk1 fg falcon and is yet to be tested in vehicle yet due to HL and VP being C.     
+  Basic python script that filters for a specific can id and then listens for specific data frames from that can id, then does an action. CANbus data used is for a mk1 fg falcon and android auto/opendash   
   
   ### can0swc - steering wheel media buttons ###  
   listens for the can frame specific to the swc button and then emits a keyboard press defined start of script  
+  set up for 
     
    ### can0hvac - air conditioner status printer & controller #### 
    started today  
      
-  ### Dependencies ###  
-  python-can (sudo apt install python-can)  
-  keyboard()
-  uinput  
+  ### Dependencies ###    
+  python3
+  uinput
+  evdev
+  python3-can  
+  keyboard
+  can-utils
+  libsocketcan2
+  libsocketcan-dev
+  
   
     
   ### Hardware ###
