@@ -16,28 +16,37 @@ GPIO.setwarnings(False)
 GPIO.setup(led,GPIO.OUT)
 GPIO.output(led,True)
 
-# simulated keypresses setup for openauto # modify this segment to define keyboard keys
+# key press events
 device = uinput.Device([
-        uinput.KEY_NEXTSONG,
+    #android auto keyboard buttons
+        uinput.KEY_N, #Next Track
         uinput.KEY_PREVIOUSSONG,
         uinput.KEY_PLAYPAUSE,
-        uinput.KEY_VOLUMEUP,
-        uinput.KEY_VOLUMEDOWN,
-        uinput.KEY_MUTE,
-        uinput.KEY_M,
-        uinput.KEY_O,
-])
+        uinput.KEY_VOLUMEUP, #Volup
+        uinput.KEY_VOLUMEDOWN, #Voldown
+        uinput.KEY_P, #Phone Button
+        uinput.KEY_M, #Google Voice
+        uinput.KEY_O, #Call End
+        uinput.KEY_H, #Home
+        uinput.KEY_X, #Play
+        uinput.KEY_C, #Pause
+        uinput.KEY_B, #Toggle Play    
+        uinput.KEY_ESC, #ESC       
+        uinput.KEY_ENTER, #Enter
+    #opendash shortcuts
+        uinput.KEY_Q, #AA page
+        uinput.KEY_W, #Vehicle Page
+        uinput.KEY_E, #Media Page
+        uinput.KEY_R, #Launcher Page
+        uinput.KEY_T, #Camera Page
+        uinput.KEY_Y, #Toggle Dark Mode
+        ])
 
-# modify this segment to define can frame data segment to listen for
-#the script works by filtering can frames and printing all frames from a specific can id
-# swc = the can id you want to listen for
-# swc_x = a single byte out of the data of the frame eg 123#DEADBEEF swc_beef=F
-
-SWC_SEEK               = 0x09 #frame 8
-SWC_SEEKHOLD           = 0x09 #frame 8
-SWC_VOLUP              = 0x11 #frame 8
-SWC_VOLDOWN            = 0x19 #frame 8
-SWC_PHONE              = 0x68 #frame 7      
+# add full can frame 
+SWC_SEEK               = 0x09 #frame 8 2F2 # 02 E3 06 4E 08 1D 00 09
+SWC_VOLUP              = 0x11 #frame 8 2F2 # 02 E3 06 4E 08 1D 00 11
+SWC_VOLDOWN            = 0x19 #frame 8 2F2 # 02 E3 06 4E 08 1D 00 19
+SWC_PHONE              = 0x68 #frame 7 2F2 # 02 E3 06 4E 08 1D 68 00     
 SWC                    = 0x2F2 #can id
 
 print('can0swc:')
@@ -48,7 +57,8 @@ print('can0swc:bringing up can0 can1 interfaces:')
 print('can0swc:can0 interface up:500kbps')
 print('can0swc:starting...')
 
-# Bring up can0 interface at 500kbps
+# Bring up can0/1 interface at 500kbps/125kbps
+#mscan is 125kbps/hscan 500kbps/testing is in loopback mode with cangen
 os.system("sudo /sbin/ip link set can0 up type can bitrate 500000")
 #os.system("sudo /sbin/ip link set can1 up type can bitrate 125000")
 time.sleep(0.1)
@@ -89,7 +99,7 @@ try:
 
             c = '{0:f},{1:d},'.format(message.timestamp,count)
             if message.arbitration_id == SWC and message.data[7] == SWC_SEEK:
-                device.emit_click(uinput.KEY_NEXTSONG) # Next Track
+                device.emit_click(uinput.KEY_N) # Next Track
                 print('can0swc:match:seek')
 
             if message.arbitration_id == SWC and message.data[7] == SWC_VOLUP:
@@ -101,7 +111,7 @@ try:
                 print('can0swc:match:voldown')
 
             if message.arbitration_id == SWC and message.data[6] == SWC_PHONE:
-                device.emit_click(uinput.KEY_M) # 
+                device.emit_click(uinput.KEY_P) # AA Phone button
                 print('can0swc:match:phone')
 
        #     if message.arbitration_id == SWC and message.data[7] == SWC_SEEKHOLD:
