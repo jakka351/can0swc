@@ -52,16 +52,22 @@ SWC_VOLUP              = 0x11 #frame 8 2F2 # 02 E3 06 4E 08 1D 00 11
 SWC_VOLDOWN            = 0x19 #frame 8 2F2 # 02 E3 06 4E 08 1D 00 19
 SWC_PHONE              = 0x68 #frame 7 2F2 # 02 E3 06 4E 08 1D 68 00     
 
-print('can0swc:')
-print('can0swc:fg-falcon steering wheel media controls')
-print('can0swc:github.com/jakka351/FG-Falcon:github.com/jakka351/can0swc')
-print('can0swc:starting...')
+print('                                                                 ')
+print('  ██████  █████  ███    ██  ██████  ███████ ██     ██  ██████    ')
+print(' ██      ██   ██ ████   ██ ██  ████ ██      ██     ██ ██         ')
+print(' ██      ███████ ██ ██  ██ ██ ██ ██ ███████ ██  █  ██ ██         ')
+print(' ██      ██   ██ ██  ██ ██ ████  ██      ██ ██ ███ ██ ██         ')
+print('  ██████ ██   ██ ██   ████  ██████  ███████  ███ ███   ██████    ')
+print('                                                                 ')
+print('fg-falcon steering wheel media controls')
+print('github.com/jakka351/FG-Falcon')
 # Bring up can0 interface at 500kbps
 #os.system("sudo /sbin/ip link set can0 up type can bitrate 500000")
 #ford ms-can is 125kbs
-#os.system("sudo /sbin/ip link set can1 up type can bitrate 125000")
-#time.sleep(0.1)
+os.system("sudo /sbin/ip link set can0 up type can bitrate 125000")
+time.sleep(0.1)
 print('can0swc:awaiting can frames:')
+
 
 try:
     bus = can.interface.Bus(channel='can0', bustype='socketcan_native') #bus channel & type refer to python-can docs
