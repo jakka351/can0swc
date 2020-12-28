@@ -44,9 +44,7 @@ device = uinput.Device([
         uinput.KEY_L, #L vol
         ])
 
-SWC                    = 0x2F2 #can id
-# add full can frame 
-#data segments are 0-7 not 1-8
+SWC                    = 0x2F2 #can id 
 SWC_SEEK               = 0x09 #frame 8 2F2 # [02] [E3] [06] [4E] [08] [1D] [00] [09]
 SWC_VOLUP              = 0x11 #frame 8 2F2 # 02 E3 06 4E 08 1D 00 11
 SWC_VOLDOWN            = 0x19 #frame 8 2F2 # 02 E3 06 4E 08 1D 00 19
@@ -64,10 +62,9 @@ print('github.com/jakka351/FG-Falcon')
 # Bring up can0 interface at 500kbps
 #os.system("sudo /sbin/ip link set can0 up type can bitrate 500000")
 #ford ms-can is 125kbs
-os.system("sudo /sbin/ip link set can0 up type can bitrate 125000")
+#os.system("sudo /sbin/ip link set can0 up type can bitrate 125000")
 time.sleep(0.1)
-print('can0swc:awaiting can frames:')
-
+print('awaiting can frames:')
 
 try:
     bus = can.interface.Bus(channel='can0', bustype='socketcan_native') #bus channel & type refer to python-can docs
@@ -81,13 +78,12 @@ def can_rx_task():  # Recv can frames only with CAN_ID specified in SWC variable
         message = bus.recv()
         if message.arbitration_id == SWC: #CAN_ID variable
             q.put(message)          # Put message into queue
-            print('can0swc:filtering can_id 0x2F2')
-            print('can0swc:can frame queued...checking...')
+            print('filtering can_id 0x2F2')
 
-q = queue.Queue()
+            q = queue.Queue()
 rx = Thread(target = can_rx_task)
 rx.start()
-c = ''
+#c =''
 count = 0
 
 # Main loop
@@ -97,33 +93,26 @@ try:
             while(q.empty() == True):       # Wait until there is a message
                 pass
             message = q.get()
-
-            c = '{0:f},{g:d},'.format(message.timestamp,count)
             if message.arbitration_id == SWC and message.data[7] == SWC_SEEK:
-                device.emit_click(uinput.KEY_N) # Next Track
-                print('can0swc:match:seek')
-                print('can0swc:')
+                device.emit_click(uinput.KEY_N) 
+                print('can0swc:seek')
                 print(message)
             if message.arbitration_id == SWC and message.data[7] == SWC_VOLUP:
-                device.emit_click(uinput.KEY_VOLUMEUP) # 
-                device.emit_click(uinput.KEY_L)
-                print('can0swc:match:volup')
-                print('can0swc:')
+                device.emit_click(uinput.KEY_VOLUMEUP)
+                print('can0swc:volup')
                 print(message)
             if message.arbitration_id == SWC and message.data[7] == SWC_VOLDOWN:
                 device.emit_click(uinput.KEY_VOLUMEDOWN)
-                device.emit_click(uinput.KEY_K) #
-                print('can0swc:match:voldown')
-                print('can0swc:')
+                print('can0swc:voldown')
                 print(message)
             if message.arbitration_id == SWC and message.data[6] == SWC_PHONE:
-                device.emit_click(uinput.KEY_P) # 
-                print('can0swc:match:phone')
-                print('can0swc:')
+                device.emit_click(uinput.KEY_P)
+                print('can0swc:phone')
                 print(message)
-                
-#exit()
-#os.system("sudo python3 /home/pi/can0swc.py")
-                                
+            elif message.arbitration_id != SWC: 
+                time.sleep(0.2) 
+                print('nothing')
+
 except KeyboardInterrupt:
     exit()
+
