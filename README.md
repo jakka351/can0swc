@@ -5,14 +5,18 @@
   
    
    ### Work in progress ###
-  Basic python script that filters for a specific can id and then listens for specific data frames from that can id, then does an action. CANbus data used is for a mk1 fg falcon and android auto/opendash   
+  Basic python script that filters for a specific can id & data frame then does an action. CANbus data used is for a mk1 fg falcon. 
+  [Basic breakdown of swc for FG Falcon](https://github.com/jakka351/FG-Falcon/wiki/Steering-Wheel-Media-Controls)  
+
   
   ### can0swc - steering wheel media buttons ###  
   listens for the can frame specific to the swc button and then emits a keyboard press 
     
-   ### can0hvac - air conditioner status printer & controller #### 
-   in progress
-     
+  ### can0hvac - air conditioner status printer & controller #### 
+   in progress  
+
+  ### template for other vehicles  
+    to do  
   ### Dependencies ###  
     
   `sudo apt update -y && sudo apt upgrade -y`  
@@ -22,15 +26,12 @@
   `sudo apt install xserver-xorg-input-evdev xserver-xorg-input-libinput python3-libevdev`  
   `sudo apt install libevdev-dev libevdev2 libevemu-dev libevemu3 libgii1 evemu-tools`  
 
-    
   
   ### Hardware ###
   Vehicle: fg falcon mk1 ms-can@125kbps, hs-can@500kbps  
   Interface: RPi4 + mcp2515(PiCAN2 Hat, china mcp2515 board) + SPI + socketcan  
   
-    
- ![image](https://www.crowdsupply.com/img/24a9/python-can_png_project-body.jpg)    
-  
+      
   Based upon:  
    -- [Python-CAN PiCAN2 Examples](https://github.com/jakka351/FG-Falcon/tree/master/resources/software/pythoncan)   
    -- [Webjocke canbus to keypress](https://github.com/webjocke/Python-CAN-bus-to-Keypresses) 
