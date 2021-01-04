@@ -79,6 +79,8 @@ def can_rx_task():  # Recv can frames only with CAN_ID specified in SWC variable
         if message.arbitration_id == SWC: #CAN_ID variable
             q.put(message)          # Put message into queue
             print('filtering can_id 0x2F2')
+ #       if message.arbitration_id != SWC: #CAN_ID variable       #test this 
+  #         print('filtering can_id 0x2F2...')
 
 q = queue.Queue()
 rx = Thread(target = can_rx_task)
