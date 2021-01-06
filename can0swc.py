@@ -125,37 +125,36 @@ rx.start()
 # main loop
 try:
     while(q.empty() == True):                                     # wait until there is a message
-                pass
-            message = q.get()
-            if message.arbitration_id == SWC and message.data[7] == SWC_SEEK:
-                device.emit_click(uinput.KEY_N) 
-                device.emit_click(uinput.KEY_Q) 
-                print('can0swc:seek')
-                print(message)
+     pass
+    message = q.get()
+     if message.arbitration_id == SWC and message.data[7] == SWC_SEEK:
+      device.emit_click(uinput.KEY_N) 
+      device.emit_click(uinput.KEY_Q) 
+      print('can0swc:seek')
+      print(message)
 
+     if message.arbitration_id == SWC and message.data[7] == SWC_VOLUP:
+      device.emit_click(uinput.KEY_VOLUMEUP)
+      device.emit_click(uinput.KEY_L) 
+      print('can0swc:volup')
+      print(message)
 
-            if message.arbitration_id == SWC and message.data[7] == SWC_VOLUP:
-                device.emit_click(uinput.KEY_VOLUMEUP)
-                device.emit_click(uinput.KEY_L) 
-                print('can0swc:volup')
-                print(message)
+     if message.arbitration_id == SWC and message.data[7] == SWC_VOLDOWN:
+      device.emit_click(uinput.KEY_VOLUMEDOWN)
+      device.emit_click(uinput.KEY_K) 
+      print('can0swc:voldown')
+      print(message)
 
-            if message.arbitration_id == SWC and message.data[7] == SWC_VOLDOWN:
-                device.emit_click(uinput.KEY_VOLUMEDOWN)
-                device.emit_click(uinput.KEY_K) 
-                print('can0swc:voldown')
-                print(message)
+     if message.arbitration_id == SWC and message.data[6] == SWC_PHONE:
+      device.emit_click(uinput.KEY_W)
+      device.emit_click(uinput.KEY_P)
+      print('can0swc:phone')
+      print(message)
 
-            if message.arbitration_id == SWC and message.data[6] == SWC_PHONE:
-                device.emit_click(uinput.KEY_W)
-                device.emit_click(uinput.KEY_P)
-                print('can0swc:phone')
-                print(message)
-
-            elif message.arbitration_id != SWC and message.data[7] != SWC_SEEK:
-               print('0x2f2 ID')
-               time.sleep(0.5) 
-               print('no data')
+    elif message.arbitration_id != SWC and message.data[7] != SWC_SEEK:
+      print('0x2f2 ID')
+      time.sleep(0.5) 
+      print('no data')
 ############################
 
 ############################
