@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-#can0hvac
+#// Ford FG can0hvac
 #FG Falcon can-frames used in this example
 #https://jakka351.github.io/FG-Falcon/
 import RPi.GPIO as GPIO #GPIO Library for LED on GPIO22 on PiCAN2 board
@@ -7,70 +7,72 @@ import can
 import time
 import os
 import uinput #keypress lib for version 1
-import keyboard # https://github.com/jakka351/keyboard (pip install keyboard)
 import queue
 from threading import Thread
 
-led = 22 #GPIO22 on the PiCAN2 Board has a LED fitted
-GPIO.setmode(GPIO.BCM)
-GPIO.setwarnings(False)
-GPIO.setup(led,GPIO.OUT)
-GPIO.output(led,True)
+HVAC                    =  0x353 #can id 851 
+HVAC_off                =  0xAB #  [5] A 129 0 0 34 [171] 0 0    All Off
+#HVAC_vent               =  #[1] by 
+HVAC_vent_face          =  16 #[1] by 16
+HVAC_vent_feet          =  8 #[1] by 8
+HVAC_vent_window0       =  4 #[1] by 4
+HVAC_vent_window1       =  2 #[1] by 2
+#HVAC_cabin_open         =  #[1] by 32
+#HVAC_cabin_closed       =  #[1] by 64
+#HVAC_demisterfront      = 
+#HVAC_demisterrear       = 
+#HVAC_fan_autooff        = #[1] by 1
+#HVAC_actemp             = message.data[3] #[4] = AC temp * 2
+#HVAC_outside            = message.data[4] #[5]
+#HVAC_fanspeed           = message.data[7] #[8] 0-10 0=fan off 10=full speed fan
+#HVAC_fanspeedauto       = 0x # [8] +128
+HVAC_fan0  =  0x00 #  [7] 129 0 0 34 X Y 0  Fan Only - Off   
+HVAC_fan1  =  0x01 #  [7] 129 0 0 34 X Y 1  Fan Only - Speed 1
+HVAC_fan2  =  0x02 #  [7] 129 0 0 34 X Y 2  Fan Only - Speed 2
+HVAC_fan3  =  0x03 #  [7] 129 0 0 34 X Y 3  Fan Only - Speed 3
+HVAC_fan4  =  0x04 #  [7] 129 0 0 34 X Y 4  Fan Only - Speed 4
+HVAC_fan5  =  0x05 #  [7] 129 0 0 34 X Y 5  Fan Only - Speed 5
+HVAC_fan6  =  0x06 #  [7] 129 0 0 34 X Y 6  Fan Only - Speed 6
+HVAC_fan7  =  0x07 #  [7] 129 0 0 34 X Y 7  Fan Only - Speed 7
+HVAC_fan8  =  0x08 #  [7] 129 0 0 34 X Y 8  Fan Only - Speed 8
+HVAC_fan9  =  0x09 #  [7] 129 0 0 34 X Y 9  Fan Only - Speed 9
+HVAC_fan10 =  0x10 #  [7] 129 0 0 34 X Y 10 Fan Only - Speed 10
+#A 129 0 0 34 X Y Z  Y Increases when Fan On - Possibly RPM
+HVAC_auto  =  0x90 #  [7] 2 129 0 0 34 X Y [144]    Full Auto
+HVAC_FVCC  =  0x4B #  [0] A = 75  Feet Vents, Close Cabin
+HVAC_FVOC  =  0x2B #  [0] A = 43  Feet Vents, Open Cabin
+HVAC_WFOC  =  0x2F #  [0] A = 47  Window and Feet Vents, Open Cabin
+HVAC_WFCC  =  0x4F #  [0] A = 79  Window and Feet Vents, Close Cabin
+#HVAC_      =  0x   #   [] A = 91  Face, Feet, Close Cabin
+#HVAC_      =  0x   #   [c] A = 59  Face, Feet, Open Cabin
+#HVAC_      =  0x   #  [c] A = 51  Face, Open Cabin
+#HVAC_      =  0x   #  [c] A = 83  Face, Close Cabin
+#HVAC_      =  0x   # [c] A = 39  Window, Manual Fan
+#HVAC_      =  0x   # [] A = 38  Window, Auto Fan
+#HVAC_      =  0x   # [] A = 131 A/C Off, Open Cabin
+#HVAC_      =  0x   # [] A = 139 A/C Off, Feet Vents, Open Cabin
+#HVAC_      =  0x   # [] A = 143 A/C Off, Feet and Window Vents, Open Cabin
+#HVAC_      =  0x   # [] A = 155 A/C Off, Feet and Face Vents, Open Cabin
+#HVAC_      =  0x   # [] A = 166 A/C Off, Window Vents, Open Cabin
+#HVAC_      =  0x   # [] A = 167 A/C Off, Manual Fan, Open Cabin
+#HVAC_      =  0x   # [] A = 195 A/C Off, Close Cabin
+#HVAC_      =  0x   # [] A = 203 A/C Off, Feet Vents, Close Cabin
+#HVAC_      =  0x   # [] A = 207 A/C Off, Feet and Window Vents, Close Cabin
+#HVAC_      =  0x   # [] A = 219 A/C Off, Feet and Face Vents, Close Cabin
+#HVAC_      =  0x   # [] A = 67  Auto, Close Cabin
+#HVAC_      =  0x   # [] A = 35  Auto, Open Cabin
+#3 129 0 0 34 X Y 145    Auto with Fan Speed Set (1)
+#3 129 0 0 34 X Y 154    Auto with Fan Speed Set (10 / Full)
+#67 129 0 0 34 X Y Z Auto, Close Cabin
+#35 129 0 0 34 X Y Z Auto, Open Cabin
+#51 129 0 0 34 X Y Z Fan Only
 
-# simulated keypresses setup for openauto # modify this segment to define keyboard keys
-device = uinput.Device([
-        uinput.KEY_NEXTSONG,
-        uinput.KEY_PREVIOUSSONG,
-        uinput.KEY_PLAYPAUSE,
-        uinput.KEY_VOLUMEUP,
-        uinput.KEY_VOLUMEDOWN,
-        uinput.KEY_MUTE,
-        uinput.KEY_M,
-        uinput.KEY_O,
-])
-
-# modify this segment to define can frame data segment to listen for
-HVAC                     = 0x2F2 #can id
-HVAC_                    = 0 #full can frame needed here
-HVAC_                    = 
-HVAC_                    = 
-HVAC_                    = 
-HVAC_                    = 
-HVAC_                    = 
-HVAC_                    = 
-HVAC_                    = 
-
-print('can0hvac:')
-print('\n\rcan0hvac:fg-falcon air-conditioner status & sender')
-print('can0hvac:')
-print('can0swc:github.com/jakka351/FG-Falcon:github.com/jakka351/can0swc')
-print('can0hvac:bringing up can0 can1 interfaces:')
-print('can0hvac:can0 interface up:500kbps')
-print('can0hvac:starting...')
-GPIO.output(led, True)
-time.sleep(0.1)
-GPIO.output(led,False)
-time.sleep(0.1)
-
-# Bring up can0 interface at 500kbps
-os.system("sudo /sbin/ip link set can0 up type can bitrate 500000")
-#ford ms-can is 125kbs
-#os.system("sudo /sbin/ip link set can1 up type can bitrate 125000")
-time.sleep(0.1)
-print('can0hvac:can0 up')
-print('can0hvac:active')
-print('can0hvac:ready')
-print('can0hvac:awaiting can frames:')
-print('can0hvac:		')
-GPIO.output(led, True)
-time.sleep(0.1)
-GPIO.output(led,False)
-time.sleep(0.1)
+#HVAC_actemp   =  message.data[3]    # [] A 129 0 38 34 X Y Z Temp Set to 19 (D = Temp * 2)
 
 try:
     bus = can.interface.Bus(channel='can0', bustype='socketcan_native') #bus channel & type refer to python-can docs
 except OSError:
-    print('can0hvac cannot start can0 or can1 interface: can0hvac cant keep it's cool: check wiring and config')
+    print('can0swc cannot start can0 or can1 interface: can0swc cant get it up: check wiring and config')
     GPIO.output(led,False)
     exit()
 
@@ -79,14 +81,14 @@ def can_rx_task():  # Recv can frames only with CAN_ID specified in SWC variable
         message = bus.recv()
         if message.arbitration_id == HVAC: #CAN_ID variable
             q.put(message)          # Put message into queue
-            print('can0hvac:filtering canid 0xFFF') #
-            print('can0hvac:can frame queued')
-            print('can0hvac:checking:	')
+            print('')
 q = queue.Queue()
 rx = Thread(target = can_rx_task)
 rx.start()
 c = ''
 count = 0
+
+time.sleep(0.1)
 
 # Main loop
 try:
@@ -96,17 +98,29 @@ try:
                 pass
             message = q.get()
 
-            c = '{0:f},{1:d},'.format(message.timestamp,count)
-            if message.arbitration_id == HVAC and message.data[x] == HVAC_x: #can frame data 
-                do.some(thing) # comment goes here about stuff
-                print('can0hvac:') 
+            c = '{0:f},{g:d},'.format(message.timestamp,count) 
+           if message.arbitration_id == HVAC:
+                print('AC Temp:')
+                print(message.data[3] / 2)
+                time.sleep(1.0)
 
-#      print('FG Falcon')
+            if message.arbitration_id == HVAC:
+                print('Outside Temp:')
+                print(message.data[4])
+                time.sleep(1.0)
+
+            if message.arbitration_id == HVAC:
+                print('Fan Speed:')
+                print(message.data[7])
+                time.sleep(1.0)
+
+            if message.arbitration_id == HVAC and message.data[5] == HVAC_off:
+                print('AC Off')
+                time.sleep(1.0)
+
+            #if message.arbitration_id == HVAC:
+             #   print('')
+             #   time.sleep(1.0)
 
 except KeyboardInterrupt:
-    #Catch keyboard interrupt
-    GPIO.output(led,True)
-    os.system("sudo /sbin/ip link set can0 down")
-    print('\n\rcan0 down can1 down')
-
-    #can frame data for hvac
+    exit()
