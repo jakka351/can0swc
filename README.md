@@ -12,7 +12,7 @@
      
 SWC are resistance based, all switches run on a single wire, pushing a button causes a specific resistance in the circuit. The Module reads the resistance, interprets and sends data on to CAN-bus where it is recieved by the ACM/FDIM/ICC and acted upon. 
 
-    - [Relevant ICC Diagrams + Pinouts](https://github.com/jakka351/FG-Falcon/wiki/Interior-Command-Centre)  
+   [Relevant ICC Diagrams + Pinouts](https://github.com/jakka351/FG-Falcon/wiki/Interior-Command-Centre)  
     
   
    
@@ -32,30 +32,30 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
   
 ### Installation, Dependencies & Config
    #### Install Dependencies  
-       >> `sudo apt install c-yan-utils libsocketcan2 libsocketcan-dev python-can python3-can`  
+        `sudo apt install c-yan-utils libsocketcan2 libsocketcan-dev python-can python3-can`  
          
-       >> `sudo apt install -y python3-uninput python3-evdev`  
+        `sudo apt install -y python3-uninput python3-evdev`  
          
-       >> `pip3 install regex`  
+        `pip3 install regex`  
    
    #### Edit configuration files  
    - edit "/etc/modules" to include   
-       >> `uinput`
+        `uinput`
          
    #### Set Up CAN interface    
    - Add the following to the 'config.txt' file in the /boot partition of the Raspberry Pi sd card.   
-       >>`dtoverlay=mcp2515-can0,oscillator=8000000,interrupt=25`    
+       `dtoverlay=mcp2515-can0,oscillator=8000000,interrupt=25`    
    - Add the following to '/etc/network/interfaces'   
-       >>  `auto can0    `  
-       >>  `iface can0 inet manual    `
-       >>  `    pre-up /sbin/ip link set can0 type can bitrate 125000 triple-sampling on restart-ms 100 `    
-       >>  `    up /sbin/ifconfig can0 up txqueuelen 65535   `   
-       >>  `    down /sbin/ifconfig can0 down `  
+         `auto can0    `  
+         `iface can0 inet manual    `
+         `    pre-up /sbin/ip link set can0 type can bitrate 125000 triple-sampling on restart-ms 100 `    
+         `    up /sbin/ifconfig can0 up txqueuelen 65535   `   
+         `    down /sbin/ifconfig can0 down `  
            
            
-    ---bring up can0  
-    ---systemd service  
-    ---test with vcan0  
+   ---bring up can0  
+   ---systemd service  
+   ---testing with vcan0 and candump logs
   
     
   ### Wiring Diagrams
