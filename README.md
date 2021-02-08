@@ -4,16 +4,21 @@
   
 
   ## Steering Wheel Controls CAN adaptor for mk1 FG Falcon     
-  listens for the can frame specific to the swc button and then emits a keyboard press 
+  Uses the python-can library to listen for the pushes of the media controls on the steering wheel, which are visible on the Falcon's mid-speed controller area network with CAN ID 0x2F2. Also listens ICC button pushes on CAN ID 0x2FC and BEM functions on 0x307. When a specific data frame matches, the script emulates a key press, which is used here with [OpenDash's](https://github.com/opendsh/dash) implementation of Android Auto emulator [Openauto]() to control basic media functions. The Car used is an FPV FG mk1 Falcon with 5.4L & tr6060, the ICC from the vehicle has had the 6 stacker CD player removed and the main screen replaced with a Raspberry Pi 7' Screen, so CAN data may be slightly different to other models.  
   
-  ####[Basic Breakdown of Steering Wheel Controls for FG Falcon](https://github.com/jakka351/FG-Falcon/wiki/Steering-Wheel-Media-Controls)    
+  ###[Basic Breakdown of Steering Wheel Controls for FG Falcon](https://github.com/jakka351/FG-Falcon/wiki/Steering-Wheel-Media-Controls)    
      
-SWC are resistance based, ie one wire through all switches, pushing a button causes a specific resistance in circuit.  Module reads the resistance, interprets and sends data on to CAN-bus.
+SWC are resistance based, all switches run on a single wire, pushing a button causes a specific resistance in the circuit. The Module reads the resistance, interprets and sends data on to CAN-bus where it is recieved by the ACM/FDIM/ICC and acted up.  
   
+   
   #### CAN Data
    | Address | Data    | Function | Byte1      | Byte2      | Byte3 | Byte4 | Byte5 | Byte6 | Byte7   | Byte8   |
 | ------- | ----    | -------- | -----      | -----      | ----- | ----- | ----- | ----- | -----   | -----   |
-| `754`   | 8 bytes | Complex  | 0x02 | 0xE3 | 0x06 | 0x4E | 0x08 | 0x1D | 0x00 | 0x00|
+| `754`   | 8 bytes | Volume Data  | 0x00| x | x | x | x | x | x | x |  
+| `754`   | 8 bytes | Seek  | x | x | x | x | x | x | x | 0x08 |  
+| `754`   | 8 bytes | Volume Up  | x | x | x | x | x | x | x | 0x10 |  
+| `754`   | 8 bytes | Volume Down  | x| x | x | x | x | x | x | 0x18 |  
+| `754`   | 8 bytes | Phone  | x| x | x | x | x | x | 0x61 | x |  
 
   ### Installation, Dependencies & Config
    - Install Dependencies  
