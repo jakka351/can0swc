@@ -34,7 +34,9 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
    ### Hardware  
   Vehicle: fg falcon mk1 ms-can@125kbps  
   Interface: RPi4 + mcp2515(PiCAN2 Hat) using SPI + socketcan      
-  
+    
+![](https://raw.githubusercontent.com/jakka351/FG-Falcon/master/resources/images/rpican.png)   
+
 ***  
   
 ### Installation, Dependencies & Config
@@ -63,14 +65,11 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
    ---testing with vcan0 and candump logs
   ***
     
-  ### Wiring Diagrams
+  ### Wiring Diagram
   ***
-  #### SWC  
-![diagram](https://github.com/jakka351/FG-Falcon/blob/master/resources/images/36042a635002807104849f240acc63e5.jpg)   
+  ![diagram](https://github.com/jakka351/FG-Falcon/blob/master/resources/images/36042a635002807104849f240acc63e5.jpg)   
   
-  #### pi  
-![](https://raw.githubusercontent.com/jakka351/FG-Falcon/master/resources/images/rpican.png)   
-***  
+  ***  
   ###  Based upon:  
    -- [Python-CAN PiCAN2 Examples](https://github.com/jakka351/FG-Falcon/tree/master/resources/software/pythoncan)   
    -- [Webjocke canbus to keypress](https://github.com/webjocke/Python-CAN-bus-to-Keypresses) 
