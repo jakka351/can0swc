@@ -30,16 +30,19 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
 ### Installation, Dependencies & Config
    - Install Dependencies  
        >> `sudo apt install c-yan-utils libsocketcan2 libsocketcan-dev python-can python3-can`  
+         
        >> `sudo apt install -y python3-uninput python3-evdev`  
+         
        >> `pip3 install regex`  
    
-   - Edit configuration files  
-       edit "/etc/modules" to include   
+  ### Edit configuration files  
+   - edit "/etc/modules" to include   
        >> `uinput`
-    Set Up CAN interface    
-    - Add the following to the 'config.txt' file in the /boot partition of the Raspberry Pi sd card.   
+         
+   #### Set Up CAN interface    
+   - Add the following to the 'config.txt' file in the /boot partition of the Raspberry Pi sd card.   
         >>`dtoverlay=mcp2515-can0,oscillator=8000000,interrupt=25`    
-    - Add the following to '/etc/network/interfaces'   
+   - Add the following to '/etc/network/interfaces'   
         >>  `auto can0    `  
         >>  `iface can0 inet manual    `
         >>  `    pre-up /sbin/ip link set can0 type can bitrate 125000 triple-sampling on restart-ms 100 `    
