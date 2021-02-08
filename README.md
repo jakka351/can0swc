@@ -1,11 +1,16 @@
- 
+    
+     ██████  █████  ███    ██  ██████  ███████ ██     ██  ██████     
+    ██      ██   ██ ████   ██ ██  ████ ██      ██     ██ ██                 
+    ██      ███████ ██ ██  ██ ██ ██ ██ ███████ ██  █  ██ ██                 
+    ██      ██   ██ ██  ██ ██ ████  ██      ██ ██ ███ ██ ██                 
+     ██████ ██   ██ ██   ████  ██████  ███████  ███ ███   ██████            
+                                                                           
+***
+# FG Falcon SWC Adapter [![GitHub issues](https://img.shields.io/github/issues/jakka351/can0swc?style=social)](https://github.com/jakka351/can0swc/issues) ![image](https://img.shields.io/badge/github-can0swc-yellowgreen) ![GitHub last commit](https://img.shields.io/github/last-commit/jakka351/can0swc)       
 
-  
-# can0swc [![GitHub issues](https://img.shields.io/github/issues/jakka351/can0swc?style=social)](https://github.com/jakka351/can0swc/issues) ![image](https://img.shields.io/badge/github-can0swc-yellowgreen) ![GitHub last commit](https://img.shields.io/github/last-commit/jakka351/can0swc)       
-  
 
 
-  ### Steering Wheel Controls CAN adaptor for mk1 FG Falcon     
+  ### Steering Wheel Controls adaptor for mk1 FG      
   Uses the python-can library to listen for the pushes of the media controls on the steering wheel, which are visible on the Falcon's mid-speed controller area network with CAN ID 0x2F2. Also listens ICC button pushes on CAN ID 0x2FC and BEM functions on 0x307. When a specific data frame matches, the script emulates a key press, which is used here with [OpenDash's](https://github.com/opendsh/dash) implementation of Android Auto emulator [Openauto]() to control basic media functions. The Car used is an FPV FG mk1 Falcon with 5.4L & tr6060, the ICC from the vehicle has had the 6 stacker CD player removed and the main screen replaced with a Raspberry Pi 7' Screen, so CAN data may be slightly different to other models.  
   
   ### [Basic Breakdown of Steering Wheel Controls for FG Falcon](https://github.com/jakka351/FG-Falcon/wiki/Steering-Wheel-Media-Controls)    
@@ -14,7 +19,7 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
 
    [Relevant ICC Diagrams + Pinouts](https://github.com/jakka351/FG-Falcon/wiki/Interior-Command-Centre)  
     
-  
+***  
    
   #### CAN Data
    | Address | Data    | Function | Byte1      | Byte2      | Byte3 | Byte4 | Byte5 | Byte6 | Byte7   | Byte8   |
@@ -25,10 +30,12 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
 | `754`   | 8 bytes | Volume Down  | x| x | x | x | x | x | x | 0x18 |  
 | `754`   | 8 bytes | Phone  | x| x | x | x | x | x | 0x61 | x |  
 
-
+***
    ### Hardware  
   Vehicle: fg falcon mk1 ms-can@125kbps  
   Interface: RPi4 + mcp2515(PiCAN2 Hat) using SPI + socketcan      
+  
+***  
   
 ### Installation, Dependencies & Config
    #### Install Dependencies  
@@ -54,25 +61,20 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
    ---bring up can0  
    ---systemd service  
    ---testing with vcan0 and candump logs
-  
+  ***
     
   ### Wiring Diagrams
+  ***
   #### SWC  
 ![diagram](https://github.com/jakka351/FG-Falcon/blob/master/resources/images/36042a635002807104849f240acc63e5.jpg)   
   
   #### pi  
 ![](https://raw.githubusercontent.com/jakka351/FG-Falcon/master/resources/images/rpican.png)   
-  
+***  
   ###  Based upon:  
    -- [Python-CAN PiCAN2 Examples](https://github.com/jakka351/FG-Falcon/tree/master/resources/software/pythoncan)   
    -- [Webjocke canbus to keypress](https://github.com/webjocke/Python-CAN-bus-to-Keypresses) 
    
-  
-     ██████  █████  ███    ██  ██████  ███████ ██     ██  ██████          
-    ██      ██   ██ ████   ██ ██  ████ ██      ██     ██ ██               
-    ██      ███████ ██ ██  ██ ██ ██ ██ ███████ ██  █  ██ ██               
-    ██      ██   ██ ██  ██ ██ ████  ██      ██ ██ ███ ██ ██               
-     ██████ ██   ██ ██   ████  ██████  ███████  ███ ███   ██████          
-                                                                           
+![](https://www.raspberrypi.org/app/uploads/2017/06/Powered-by-Raspberry-Pi-Logo_Outline-Colour-Screen-500x153.png)  
      
 -
