@@ -10,7 +10,7 @@
   
   ### [Basic Breakdown of Steering Wheel Controls for FG Falcon](https://github.com/jakka351/FG-Falcon/wiki/Steering-Wheel-Media-Controls)    
      
-SWC are resistance based, all switches run on a single wire, pushing a button causes a specific resistance in the circuit. The Module reads the resistance, interprets and sends data on to CAN-bus where it is recieved by the ACM/FDIM/ICC and acted up.  
+SWC are resistance based, all switches run on a single wire, pushing a button causes a specific resistance in the circuit. The Module reads the resistance, interprets and sends data on to CAN-bus where it is recieved by the ACM/FDIM/ICC and acted upon.  
   
    
   #### CAN Data
