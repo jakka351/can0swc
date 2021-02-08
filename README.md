@@ -32,10 +32,8 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
   
 ### Installation, Dependencies & Config
    #### Install Dependencies  
-        `sudo apt install c-yan-utils libsocketcan2 libsocketcan-dev python-can python3-can`  
-         
+        `sudo apt install -y can-utils libsocketcan2 libsocketcan-dev python-can python3-can`  
         `sudo apt install -y python3-uninput python3-evdev`  
-         
         `pip3 install regex`  
    
    #### Edit configuration files  
