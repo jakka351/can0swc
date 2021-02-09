@@ -1,0 +1,10 @@
+evdev==1.1.2
+input==0.0.0
+serial==0.0.97
+python-uinput==0.11.2
+pyudev==0.21.0
+regex==2020.11.13
+pyserial==3.4
+python-can==3.0.0
+python-dateutil==2.7.3
+libevdev==0.5

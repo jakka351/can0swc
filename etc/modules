@@ -1,0 +1,12 @@
+
+# /etc/modules: kernel modules to load at boot time.
+#
+# This file contains the names of kernel modules tha$
+# at boot time, one per line. Lines beginning with "$
+uinput
+vcan
+can
+can_raw
+can_dev
+
+
