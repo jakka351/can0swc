@@ -40,12 +40,13 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
 ***  
   
 ### Installation, Dependencies & Config
-   #### Install Dependencies  
+   #### Installation
        sudo apt install -y can-utils libsocketcan2 libsocketcan-dev python-can python3-can &&   
        sudo apt install -y python3-uninput python3-evdev &&  
        sudo git clone https://github.com/jakka351/can0swc ./can0swc &&  
        cd ./can0swc &&  
        pip3 install -r requirements.txt &&    
+       sudo modprobe uinput &&
        sudo cp ./can0swc.service /lib/system/system/can0swc.service &&  
        sudo systemctl enable can0swc.service &&  
        sudo systemctl start can0swc.service &&  
@@ -67,13 +68,24 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
          `iface can0 inet manual    `
          `    pre-up /sbin/ip link set can0 type can bitrate 125000 triple-sampling on restart-ms 100 `    
          `    up /sbin/ifconfig can0 up txqueuelen 65535   `   
-         `    down /sbin/ifconfig can0 down `  
-           
-           
-   ---bring up can0  
-   ---systemd service  
-   ---testing with vcan0 and candump logs
-  ***
+         `    down /sbin/ifconfig can0 down `    
+   - Bring the can0 interface up  
+         `sudo ip link set can0 type can bitrate 125000 triple-sampling on restart-ms 100 `   
+         `sudo ifconfig can0 up txqueuelen 65535 `      
+     
+       
+     
+   #### Testing with can-utils  
+   - to test the script with socketcan virtual can interface, vcan0 and candump log files      
+        `sudo modprobe vcan0`  
+        `sudo ip link add dev vcan0 type vcan`  
+        `sudo ifconfig vcan0 up txqueuelen 1000`  
+    - Use canplayer to run the candump log    
+        `canplayer -I ./candump.log -v vcan0=can0`   
+    - To run script    
+        `sudo python3 ./can0swc.py`  
+        
+         
     
   ### Wiring Diagram
   ***
