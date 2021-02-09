@@ -41,10 +41,20 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
   
 ### Installation, Dependencies & Config
    #### Install Dependencies  
-       `sudo apt install -y can-utils libsocketcan2 libsocketcan-dev python-can python3-can`  
-       `sudo apt install -y python3-uninput python3-evdev`  
-       `pip3 install -r requirements.txt`  
-   
+       sudo apt install -y can-utils libsocketcan2 libsocketcan-dev python-can python3-can &&   
+       sudo apt install -y python3-uninput python3-evdev &&  
+       sudo git clone https://github.com/jakka351/can0swc ./can0swc &&  
+       cd ./can0swc &&  
+       pip3 install -r requirements.txt &&    
+       sudo cp ./can0swc.service /lib/system/system/can0swc.service &&  
+       sudo systemctl enable can0swc.service &&  
+       sudo systemctl start can0swc.service &&  
+       sudo systemctl status can0swc.service &&  
+       sudo reboot  
+         
+           
+       
+       
    #### Edit configuration files  
    - edit "/etc/modules" to include   
         `uinput`
