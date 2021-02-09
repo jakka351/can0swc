@@ -1,0 +1,17 @@
+Description=can0swc
+After=graphical.target
+[Service]
+Type=idle
+User=root
+StandardOutput=inherit
+StandardError=inherit
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=/home/pi/.Xauthority
+WorkingDirectory=/home/pi/
+ExecStart=sudo python3 /home/pi/can0swc/can0swc.py
+Restart=always
+RestartSec=1s
+KillMode=process
+TimeoutSec=infinity
+[Install]
+WantedBy=graphical.target
