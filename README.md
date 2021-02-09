@@ -81,7 +81,9 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
         `sudo ip link add dev vcan0 type vcan`  
         `sudo ifconfig vcan0 up txqueuelen 1000`  
    - Use canplayer to run the candump log    
-        `canplayer -I ./candump.log -v vcan0=can0`   
+        `canplayer -I ./candump.log -v vcan0=can0`  
+   - If running cangen use '-L 8' to keep frames at 11bits or an error will occur  
+        `cangen vcan0 -c -L 8 &`  
    - Run script    
         `sudo python3 ./can0swc.py`  
         
