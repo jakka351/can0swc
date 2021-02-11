@@ -35,7 +35,7 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
   Vehicle: fg falcon mk1 ms-can@125kbps  
   Interface: RPi4 + mcp2515(PiCAN2 Hat) using SPI + socketcan      
     
-![](https://raw.githubusercontent.com/jakka351/FG-Falcon/master/resources/images/rpican.png)   
+![](https://raw.githubusercontent.com/jakka351/can0swc/main/falcon.png)   
 
 ***  
   
