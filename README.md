@@ -23,7 +23,7 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
   
    
   ### CAN Data  
-***  
+
    | Address | Data    | Function | Byte1      | Byte2      | Byte3 | Byte4 | Byte5 | Byte6 | Byte7   | Byte8   |
 | ------- | ----    | -------- | -----      | -----      | ----- | ----- | ----- | ----- | -----   | -----   |
 | `754`   | 8 bytes | Volume Data  | 0x00| x | x | x | x | x | x | x |  
@@ -95,10 +95,10 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
        
     
   ### Wiring Diagram
-  ***
+  
   ![diagram](https://github.com/jakka351/FG-Falcon/blob/master/resources/images/36042a635002807104849f240acc63e5.jpg)   
   
-  ***  
+    
   ###  Based upon:  
    -- [Python-CAN PiCAN2 Examples](https://github.com/jakka351/FG-Falcon/tree/master/resources/software/pythoncan)   
    -- [Webjocke canbus to keypress](https://github.com/webjocke/Python-CAN-bus-to-Keypresses) 
