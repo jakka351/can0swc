@@ -10,18 +10,20 @@
 
 
 
-  ### Steering Wheel Controls adaptor for mk1 FG      
+  ### Steering Wheel Controls adaptor for mk1 FG
+  ***
   Uses the python-can library to listen for the pushes of the media controls on the steering wheel, which are visible on the Falcon's mid-speed controller area network with CAN ID 0x2F2. Also listens for ICC button pushes on CAN ID 0x2FC and BEM functions on 0x307. When a specific data frame matches, the script emulates a key press, which is used here with [OpenDash's](https://github.com/opendsh/dash) implementation of Android Auto emulator [Openauto]() to control basic media functions. The Car used is an FPV FG mk1 Falcon with 5.4L & tr6060, the ICC from the vehicle has had the 6 stacker CD player removed and the main screen replaced with a Raspberry Pi 7' Screen, so CAN data may be slightly different to other models.  
   
   ### [Basic Breakdown of Steering Wheel Controls for FG Falcon](https://github.com/jakka351/FG-Falcon/wiki/Steering-Wheel-Media-Controls)    
-                                   
+***                                   
 SWC are resistance based, all switches run on a single wire, pushing a button causes a specific resistance in the circuit. The Module reads the resistance, interprets and sends data on to CAN-bus where it is recieved by the ACM/FDIM/ICC and acted upon. 
 
    [Relevant ICC Diagrams + Pinouts](https://github.com/jakka351/FG-Falcon/wiki/Interior-Command-Centre)  
     
 ***  
    
-  #### CAN Data
+  ### CAN Data  
+***  
    | Address | Data    | Function | Byte1      | Byte2      | Byte3 | Byte4 | Byte5 | Byte6 | Byte7   | Byte8   |
 | ------- | ----    | -------- | -----      | -----      | ----- | ----- | ----- | ----- | -----   | -----   |
 | `754`   | 8 bytes | Volume Data  | 0x00| x | x | x | x | x | x | x |  
@@ -31,7 +33,9 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
 | `754`   | 8 bytes | Phone  | x| x | x | x | x | x | 0x61 | x |  
 
 ***
-   ### Hardware  
+  
+### Hardware
+***  
   Vehicle: fg falcon mk1 ms-can@125kbps  
   Interface: RPi4 + mcp2515(PiCAN2 Hat) using SPI + socketcan      
     
@@ -40,13 +44,14 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
 ***  
   
 ### Installation, Dependencies & Config
-  
+***  
        
    #### Edit configuration files  
    - edit "/etc/modules" to include   
         `uinput`
           
-   #### Installation
+   #### Installation  
+       sudo apt update -y && sudo apt upgrade -y &&
        sudo apt install -y can-utils libsocketcan2 libsocketcan-dev python-can python3-can &&   
        sudo apt install -y python3-uninput python3-evdev &&  
        sudo git clone https://github.com/jakka351/can0swc ./can0swc &&  
@@ -82,10 +87,12 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
         `canplayer -I ./candump.log -v vcan0=can0`  
    - If running cangen use '-L 8' to keep frames at 11bits or an error will occur  
         `cangen vcan0 -c -L 8 &`  
-   - Run script    
+   - Candump logs available [here](https://github.com/jakka351/fg-falcon)  
+       
+   #### Run script    
         `sudo python3 ./can0swc.py`  
         
-         
+  ***       
     
   ### Wiring Diagram
   ***
