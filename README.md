@@ -11,16 +11,16 @@
 
 
   ### Steering Wheel Controls adaptor for mk1 FG
-  ***
+  
   Uses the python-can library to listen for the pushes of the media controls on the steering wheel, which are visible on the Falcon's mid-speed controller area network with CAN ID 0x2F2. Also listens for ICC button pushes on CAN ID 0x2FC and BEM functions on 0x307. When a specific data frame matches, the script emulates a key press, which is used here with [OpenDash's](https://github.com/opendsh/dash) implementation of Android Auto emulator [Openauto]() to control basic media functions. The Car used is an FPV FG mk1 Falcon with 5.4L & tr6060, the ICC from the vehicle has had the 6 stacker CD player removed and the main screen replaced with a Raspberry Pi 7' Screen, so CAN data may be slightly different to other models.  
   
   ### [Basic Breakdown of Steering Wheel Controls for FG Falcon](https://github.com/jakka351/FG-Falcon/wiki/Steering-Wheel-Media-Controls)    
-***                                   
+                                   
 SWC are resistance based, all switches run on a single wire, pushing a button causes a specific resistance in the circuit. The Module reads the resistance, interprets and sends data on to CAN-bus where it is recieved by the ACM/FDIM/ICC and acted upon. 
 
    [Relevant ICC Diagrams + Pinouts](https://github.com/jakka351/FG-Falcon/wiki/Interior-Command-Centre)  
     
-***  
+  
    
   ### CAN Data  
 ***  
@@ -35,7 +35,7 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
 ***
   
 ### Hardware
-***  
+  
   Vehicle: fg falcon mk1 ms-can@125kbps  
   Interface: RPi4 + mcp2515(PiCAN2 Hat) using SPI + socketcan      
     
@@ -44,7 +44,7 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
 ***  
   
 ### Installation, Dependencies & Config
-***  
+  
        
    #### Edit configuration files  
    - edit "/etc/modules" to include   
@@ -92,7 +92,7 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
    #### Run script    
         `sudo python3 ./can0swc.py`  
         
-  ***       
+       
     
   ### Wiring Diagram
   ***
