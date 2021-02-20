@@ -27,11 +27,13 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
    | Address | Data    | Function | Byte1      | Byte2      | Byte3 | Byte4 | Byte5 | Byte6 | Byte7   | Byte8   |
 | ------- | ----    | -------- | -----      | -----      | ----- | ----- | ----- | ----- | -----   | -----   |
 | `754`   | 8 bytes | Volume Data  | 0x00| x | x | x | x | x | x | x |  
-| `754`   | 8 bytes | Seek  | x | x | x | x | x | x | x | 0x08 |  
-| `754`   | 8 bytes | Volume Up  | x | x | x | x | x | x | x | 0x10 |  
-| `754`   | 8 bytes | Volume Down  | x| x | x | x | x | x | x | 0x18 |  
-| `754`   | 8 bytes | Phone  | x| x | x | x | x | x | 0x61 | x |  
-
+| `754`   | 8 bytes | Seek  | x | x | x | x | x | x | x | 0x08* |  
+| `754`   | 8 bytes | Volume Up  | x | x | x | x | x | x | x | 0x10* |  
+| `754`   | 8 bytes | Volume Down  | x| x | x | x | x | x | x | 0x18* |  
+| `754`   | 8 bytes | Phone  | x| x | x | x | x | x | 0x61** | x |  
+***
+*+1 depending on audio mode  
+**65 or 68 depending on audio mode  
 ***
   
 ### Hardware
