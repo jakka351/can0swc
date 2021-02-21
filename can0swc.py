@@ -41,8 +41,8 @@ device = uinput.Device([
 ############################
 # define CAN identifiers
 SWC                    = 0x2F2              #id 751
-#SWC2                   = 0x2EC              #id 748
-ICC                    = 0x2F4              #id 764
+SWC2                   = 0x2EC              #id 748
+ICC                    = 0x2FC              #id 764
 BEM                    = 0x307              #id 
 ############################
 # volume level data
@@ -52,16 +52,16 @@ SWC_SEEK               = (0x08, 0x09)  # [7]
 SWC_VOLUP              = (0x10, 0x11)  # [7]
 SWC_VOLDOWN            = (0x18, 0x19)  # [7] 
 SWC_PHONE              = (0x61,0x65,0x68) #[6]
-#SWC_MODE               = 0x00
+SWC_MODE               = 0x10
 ICC_VOLUP              = 0x41 #[3]
 ICC_VOLDOWN            = 0x81 #[3]
-ICC_NEXT               = 0x08 #[0]
-ICC_PREV               = 0x04 #[0]
+ICC_NEXT               = 0x04 #[0]
+ICC_PREV               = 0x08 #[0]
 ICC_PWR                = 0x00
 ICC_EJECT              = 0x80 #[1]
 ICC_LOAD               = 0x40 #[1]
 ICC_MENU               = 0x10 #[0]
-#ICC_BACK               = 0x00
+ICC_BACK               = 0x00
 ICC_OK                 = 0x21 #[2]
 BEM_HAZ                = (0x01, 0x80) # -flash hazard triangle img
 BEM_LOCK               = 0x00 #-flash padlock img
@@ -115,7 +115,10 @@ def can_rx_task():                                               # rx can frames
     while True:
         message = bus.recv()
         if message.arbitration_id == SWC:                        # CAN_ID variable
-            q.put(message)                                       # put message into queue
+            q.put(message) 
+                                      
+        if message.arbitration_id == SWC2:                        # CAN_ID variable
+            q.put(message) 
 
         if message.arbitration_id == ICC:                        # CAN_ID variable
             q.put(message)
@@ -168,9 +171,14 @@ try:
             if message.arbitration_id == SWC and message.data[6] == SWC_PHONE[1]:
                 device.emit_click(uinput.KEY_P)
                 print('can0swc:phone')
-            #elif message.arbitration_id == SWC:
-            #    print('Media Volume:' message.data[1])
-      #hex2dece
+
+            if message.arbitration_id == SWC2 and message.data[6] == SWC_MODE:
+                print('mode button')
+      
+            if message.arbitration_id == SWC and message.data[0] == Vol:
+                print('vol level', VOL)
+      
+#
 ############################
 #ICC Buttons
 ############################
