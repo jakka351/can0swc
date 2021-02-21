@@ -37,36 +37,29 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
 ***
   
 ### Hardware
-  
-  Vehicle: fg falcon mk1 ms-can@125kbps  
-  Interface: RPi4 + mcp2515(PiCAN2 Hat) using SPI + socketcan      
-    
+  #### Graphic  
 ![](https://raw.githubusercontent.com/jakka351/can0swc/main/falcon.png)   
+   
+  
+ **Vehicle:** FG Falcon mk1   
+ **Interface:** SocketCAN can0 interface, MCP2515 chipset, Midspeed-CAN@125kbps  
+ **SBC:** Raspberry Pi 4B - 8gb, PiCan2 Hat, i2s audio hat  
+ **Other:** Modified OBD-DB9 Cable, 7" Official Touchscreen, 2 Metre DSI Ribbon Cable   
+    
+  #### Images 
 
 ***  
   
 ### Installation, Dependencies & Config
-  
        
-   #### Edit configuration files  
+   #### Edit  
    - edit "/etc/modules" to include   
-        `uinput`
+        `uinput`         
+        `can`  
+        `can_dev_`  
+        `can_raw`  
+        `vcan`  
           
-   #### Installation  
-       sudo apt update -y && sudo apt upgrade -y &&
-       sudo apt install -y can-utils libsocketcan2 libsocketcan-dev python-can python3-can &&   
-       sudo apt install -y python3-uinput python3-evdev &&  
-       sudo git clone https://github.com/jakka351/can0swc ./can0swc &&  
-       cd ./can0swc &&  
-       pip3 install -r requirements.txt &&    
-       sudo modprobe uinput &&
-       sudo cp ./can0swc.service /lib/system/system/can0swc.service &&  
-       sudo systemctl enable can0swc.service &&  
-       sudo systemctl start can0swc.service &&  
-       sudo systemctl status can0swc.service &&  
-       sudo reboot  
-         
-                     
    #### Set Up CAN interface    
    - Add the following to the 'config.txt' file in the /boot partition of the Raspberry Pi sd card.   
        `dtoverlay=mcp2515-can0,oscillator=8000000,interrupt=25`    
@@ -78,10 +71,24 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
          `    down /sbin/ifconfig can0 down `    
    - Bring the can0 interface up  
          `sudo ip link set can0 type can bitrate 125000 triple-sampling on restart-ms 100 `   
-         `sudo ifconfig can0 up txqueuelen 65535 `      
-     
+         `sudo ifconfig can0 up txqueuelen 65535 ` 
+          
+   #### Install  
+       sudo apt update -y && sudo apt upgrade -y &&
+       sudo apt install -y can-utils libsocketcan2 libsocketcan-dev python-can python3-can &&   
+       sudo apt install -y python3-uinput python3-evdev &&  
+       sudo git clone https://github.com/jakka351/can0swc ./can0swc &&  
+       cd ./can0swc &&  
+       pip3 install -r requirements.txt &&    
+       sudo modprobe uinput &&
+       sudo cp ./can0swc.service /lib/system/system/can0swc.service &&  
+       sudo systemctl enable can0swc.service &&  
+       sudo systemctl start can0swc.service &&  
+       sudo systemctl status can0swc.service &&  
+       sudo reboot
+               
    #### Testing with can-utils  
-   - to test the script with socketcan virtual can interface, vcan0 and candump log files      
+   - Test the script with socketcan virtual can interface, vcan0 and candump log files      
         `sudo modprobe vcan0`  
         `sudo ip link add dev vcan0 type vcan`  
         `sudo ifconfig vcan0 up txqueuelen 1000`  
@@ -91,7 +98,8 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
         `cangen vcan0 -c -L 8 &`  
    - Candump logs available [here](https://github.com/jakka351/fg-falcon)  
        
-   #### Run script    
+   #### Run Script Manually
+        `cd ~/can0swc`  
         `sudo python3 ./can0swc.py`  
         
        
@@ -99,7 +107,11 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
   ### Wiring Diagram
   
   ![diagram](https://github.com/jakka351/FG-Falcon/blob/master/resources/images/36042a635002807104849f240acc63e5.jpg)   
+  ![dlc](https://raw.githubusercontent.com/jakka351/FG-Falcon/master/resources/images/plug_dlc.png)  
   
+  ### Use in Different Vehicles  
+  There is a templated version of the script that can be used to make your own version of can0swc, named as 'template.py'. This project was done using a Raspberry Pi 4 and a PiCan2 hat.
+    
     
   ###  Based upon:  
    -- [Python-CAN PiCAN2 Examples](https://github.com/jakka351/FG-Falcon/tree/master/resources/software/pythoncan)   
