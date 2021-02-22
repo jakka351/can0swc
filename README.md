@@ -81,7 +81,7 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
        cd ./can0swc &&  
        pip3 install -r requirements.txt &&    
        sudo modprobe uinput &&
-       sudo cp ./can0swc.service /lib/system/system/can0swc.service &&  
+       sudo cp ./can0swc.service /lib/systemd/system/can0swc.service &&  
        sudo systemctl enable can0swc.service &&  
        sudo systemctl start can0swc.service &&  
        sudo systemctl status can0swc.service &&  
