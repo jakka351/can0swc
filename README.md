@@ -49,7 +49,7 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
  **Other:** Modified OBD-DB9 Cable, 7" Official Touchscreen, 2 Metre DSI Ribbon Cable   
     
   #### Images   
-![](https://raw.githubusercontent.com/jakka351/can0swc/main/test.png)  
+![](https://raw.githubusercontent.com/jakka351/can0swc/main/etc/test.jpg)  
   
 ***  
   
