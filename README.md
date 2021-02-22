@@ -31,6 +31,8 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
 | `754`   | 8 bytes | Volume Up  | x | x | x | x | x | x | x | 0x10* |  
 | `754`   | 8 bytes | Volume Down  | x| x | x | x | x | x | x | 0x18* |  
 | `754`   | 8 bytes | Phone  | x| x | x | x | x | x | 0x61** | x |  
+| `748`   | 8 bytes | Mode  | x| x | x | x | x | x | 0x10 | x |  
+
 ***
 *+1 depending on audio mode  
 **65 or 68 depending on audio mode  
@@ -46,8 +48,9 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
  **SBC:** Raspberry Pi 4B - 8gb, PiCan2 Hat, i2s audio hat  
  **Other:** Modified OBD-DB9 Cable, 7" Official Touchscreen, 2 Metre DSI Ribbon Cable   
     
-  #### Images 
-
+  #### Images   
+![](https://raw.githubusercontent.com/jakka351/can0swc/main/test.png)  
+  
 ***  
   
 ### Installation, Dependencies & Config
@@ -56,7 +59,7 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
    - edit "/etc/modules" to include   
         `uinput`         
         `can`  
-        `can_dev_`  
+        `can_dev`  
         `can_raw`  
         `vcan`  
           
@@ -110,8 +113,7 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
   ![dlc](https://raw.githubusercontent.com/jakka351/FG-Falcon/master/resources/images/plug_dlc.png)  
   
   ### Use in Different Vehicles  
-  There is a templated version of the script that can be used to make your own version of can0swc, named as 'template.py'. This project was done using a Raspberry Pi 4 and a PiCan2 hat.
-    
+  There is a templated version of the script that can be used to make your own version of can0swc, named as 'template.py'. 
     
   ###  Based upon:  
    -- [Python-CAN PiCAN2 Examples](https://github.com/jakka351/FG-Falcon/tree/master/resources/software/pythoncan)   
