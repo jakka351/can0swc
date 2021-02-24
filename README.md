@@ -45,6 +45,7 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
   
  **Vehicle:** FG Falcon mk1   
  **Interface:** SocketCAN can0 interface, MCP2515 chipset, Midspeed-CAN@125kbps  
+ **Software:**  Can-Utils, Python-Can, Openauto, Opendash, Raspbian
  **SBC:** Raspberry Pi 4B - 8gb, PiCan2 Hat, i2s audio hat  
  **Other:** Modified OBD-DB9 Cable, 7" Official Touchscreen, 2 Metre DSI Ribbon Cable
   
