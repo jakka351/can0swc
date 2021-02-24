@@ -12,13 +12,13 @@
 
   ### Steering Wheel Controls adaptor for mk1 FG
   
-  Uses the python-can library to listen for the pushes of the media controls on the steering wheel, which are visible on the Falcon's mid-speed controller area network with CAN ID 0x2F2. Also listens for ICC button pushes on CAN ID 0x2FC and BEM functions on 0x307. When a specific data frame matches, the script emulates a key press, which is used here with [OpenDash's](https://github.com/opendsh/dash) implementation of Android Auto emulator [Openauto]() to control basic media functions. The Car used is an FPV FG mk1 Falcon with 5.4L & tr6060, the ICC from the vehicle has had the 6 stacker CD player removed and the main screen replaced with a Raspberry Pi 7' Screen, so CAN data may be slightly different to other models.  
+  Uses the python-can library to listen for pushes of steering wheel buttons, which are visible on the Falcon's mid-speed controller area network with CAN ID 0x2F2. Also listens for ICC button pushes on CAN ID 0x2FC and BEM functions on 0x307. When a button is pushed, the script emulates a keypress on the Raspberry Pi. This is used here with [OpenDash's](https://github.com/opendsh/dash) implementation of Android Auto emulator [Openauto]() to control basic media functions. The Car used is an Ford FG mk1 Falcon with, the ICC from the vehicle has had the CD player removed and the main screen replaced with a Raspberry Pi 7 Inch Screen.    
   
   ### [Basic Breakdown of Steering Wheel Controls for FG Falcon](https://github.com/jakka351/FG-Falcon/wiki/Steering-Wheel-Media-Controls)    
                                    
-SWC are resistance based, all switches run on a single wire, pushing a button causes a specific resistance in the circuit. The Module reads the resistance, interprets and sends data on to CAN-bus where it is recieved by the ACM/FDIM/ICC and acted upon. 
+SWC are resistance based, all switches run on a single wire, pushing a button causes a specific resistance in the circuit. The Module sees a change in resistance, and accordingly sends data on to CAN-bus where it is recieved by the ACM/FDIM/ICC and acted upon. 
 
-   [Relevant ICC Diagrams + Pinouts](https://github.com/jakka351/FG-Falcon/wiki/Interior-Command-Centre)  
+ --  [Relevant ICC Diagrams + Pinouts](https://github.com/jakka351/FG-Falcon/wiki/Interior-Command-Centre)  
     
   
    
@@ -39,17 +39,20 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
 ***
   
 ### Hardware
-  #### Diagram  
-![](https://raw.githubusercontent.com/jakka351/can0swc/main/falcon.png)   
-   
+
   
  **Vehicle:** FG Falcon mk1   
  **Interface:** SocketCAN can0 interface, MCP2515 chipset, Midspeed-CAN@125kbps  
- **Software:**  Can-Utils, Python-Can, Openauto, Opendash, Raspbian
- **SBC:** Raspberry Pi 4B - 8gb, PiCan2 Hat, i2s audio hat  
- **Other:** Modified OBD-DB9 Cable, 7" Official Touchscreen, 2 Metre DSI Ribbon Cable
+ **Software:**  Can-Utils, Python-Can, Openauto, Opendash, Raspbian   
+ **SBC:** Raspberry Pi 4B - 8gb, PiCan2 Hat, i2s audio hat
+ **Other:** Modified OBD-DB9 Cable, 7" Official Touchscreen, 2 Metre DSI Ribbon Cable, heatsink case, fans, enclosure, 12vdc-5vdc converter 
   
-#### ICC  
+  #### Unit Layout  
+![](https://raw.githubusercontent.com/jakka351/can0swc/main/falcon.png)   
+   
+  #### Actual Unit  
+![]()
+  #### ICC  
 ![](https://raw.githubusercontent.com/jakka351/can0swc/main/test%20(1).jpg) 
 
 ***  
@@ -67,7 +70,10 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
    #### Set Up CAN interface    
    - Add the following to the 'config.txt' file in the /boot partition of the Raspberry Pi sd card.   
        `dtoverlay=mcp2515-can0,oscillator=8000000,interrupt=25`    
-   - Add the following to '/etc/network/interfaces'   
+   - If using a PiCan Board set oscillator to 16000000  
+       `oscillator=16000000`  
+
+ - Add the following to '/etc/network/interfaces'   
          `auto can0    `  
          `iface can0 inet manual    `
          `    pre-up /sbin/ip link set can0 type can bitrate 125000 triple-sampling on restart-ms 100 `    
