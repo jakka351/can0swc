@@ -39,18 +39,18 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
 ***
   
 ### Hardware
-  #### Graphic  
+  #### Diagram  
 ![](https://raw.githubusercontent.com/jakka351/can0swc/main/falcon.png)   
    
   
  **Vehicle:** FG Falcon mk1   
  **Interface:** SocketCAN can0 interface, MCP2515 chipset, Midspeed-CAN@125kbps  
  **SBC:** Raspberry Pi 4B - 8gb, PiCan2 Hat, i2s audio hat  
- **Other:** Modified OBD-DB9 Cable, 7" Official Touchscreen, 2 Metre DSI Ribbon Cable   
-    
-  #### Images   
-![](https://raw.githubusercontent.com/jakka351/can0swc/main/etc/test.jpg)  
+ **Other:** Modified OBD-DB9 Cable, 7" Official Touchscreen, 2 Metre DSI Ribbon Cable
   
+#### ICC  
+![](https://raw.githubusercontent.com/jakka351/can0swc/main/test%20(1).jpg) 
+
 ***  
   
 ### Installation, Dependencies & Config
