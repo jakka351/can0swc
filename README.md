@@ -48,13 +48,13 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
  **Other:** Modified OBD-DB9 Cable, 7" Official Touchscreen, 2 Metre DSI Ribbon Cable, heatsink case, fans, enclosure, 12vdc-5vdc converter   
   
   #### Unit Layout  
-![](https://raw.githubusercontent.com/jakka351/can0swc/main/falcon.png)   
+<img src="https://raw.githubusercontent.com/jakka351/can0swc/main/falcon.png" width="500" height="500" />  
    
   #### Actual Unit  
-![](https://raw.githubusercontent.com/jakka351/can0swc/main/canpii.jpg)
+<img src="https://raw.githubusercontent.com/jakka351/can0swc/main/canpii.jpg" width="300" height="425" />
 
   #### ICC  
-![](https://raw.githubusercontent.com/jakka351/can0swc/main/test%20(1).jpg) 
+<img src="https://raw.githubusercontent.com/jakka351/can0swc/main/test%20(1).jpg" width="300" height="425" /> 
 
 ***  
   
