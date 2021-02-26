@@ -47,14 +47,14 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
  **SBC:** Raspberry Pi 4B - 8gb, PiCan2 Hat, i2s audio hat  
  **Other:** Modified OBD-DB9 Cable, 7" Official Touchscreen, 2 Metre DSI Ribbon Cable, heatsink case, fans, enclosure, 12vdc-5vdc converter   
   
-  #### Unit Layout  
+  #### Unit Diagram  
 <img src="https://raw.githubusercontent.com/jakka351/can0swc/main/falcon.png" width="500" height="500" />  
    
-  #### Actual Unit  
-<img src="https://raw.githubusercontent.com/jakka351/can0swc/main/canpii.jpg" width="300" height="425" />
+  #### Actual Unit 
+<img src="https://raw.githubusercontent.com/jakka351/can0swc/main/canpii.jpg" width="300" height="425"> <img src="https://raw.githubusercontent.com/jakka351/can0swc/main/test%20(1).jpg" width="325" height="425" /> 
 
-  #### ICC  
-<img src="https://raw.githubusercontent.com/jakka351/can0swc/main/test%20(1).jpg" width="300" height="425" /> 
+  
+
 
 ***  
   
@@ -115,10 +115,10 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
         
        
     
-  ### Wiring Diagram
+  ### Wiring Diagrams
   
-  ![diagram](https://github.com/jakka351/FG-Falcon/blob/master/resources/images/36042a635002807104849f240acc63e5.jpg)   
-  ![dlc](https://raw.githubusercontent.com/jakka351/FG-Falcon/master/resources/images/plug_dlc.png)  
+  <img src="https://github.com/jakka351/FG-Falcon/blob/master/resources/images/36042a635002807104849f240acc63e5.jpg" width="600" height="600" />    
+  <img src="https://raw.githubusercontent.com/jakka351/FG-Falcon/master/resources/images/plug_dlc.png" width="600" height="600" /> 
   
   ### Use in Different Vehicles  
   There is a templated version of the script that can be used to make your own version of can0swc, named as 'template.py'. 
