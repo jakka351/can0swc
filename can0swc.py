@@ -57,12 +57,20 @@ ICC_VOLUP              = 0x41 #[3]
 ICC_VOLDOWN            = 0x81 #[3]
 ICC_NEXT               = 0x04 #[0]
 ICC_PREV               = 0x08 #[0]
-ICC_PWR                = 0x00
+#ICC_PWR                = 0x00
 ICC_EJECT              = 0x80 #[1]
 ICC_LOAD               = 0x40 #[1]
 ICC_MENU               = 0x10 #[0]
-ICC_BACK               = 0x00
+#ICC_BACK               = 0x00
 ICC_OK                 = 0x21 #[2]
+############################
+# BEM Button CAN Data
+############################
+UNLOCK                 = 0x84  #[3]
+LOCK                   = 0xC0  #[3]
+DSC                    = 0x90  #[3]
+LIGHT                  = 0xA0  #[3]
+HAZARD                 = 0x01, 0x80 #[2] [3]  
 ############################
 # pointless intro text
 ############################
@@ -130,7 +138,7 @@ try:
     bus = can.interface.Bus(channel='vcan0', bustype='socketcan_native')
     print('can0swc:')
     time.sleep(0.1)
-    print("        bus = can.interface.bus | channel=can0 | bustype=socketcan")
+    print(' ')
     time.sleep(0.1)
     print('        awaiting can frames...')
     time.sleep(0.1)
@@ -156,6 +164,9 @@ def can_rx_task():                                               # rx can frames
             q.put(message)                                       # put message into queue
 
         if message.arbitration_id == ICC:                        # CAN_ID variable
+            q.put(message)
+        
+        if message.arbitration_id == BEM:                        # CAN_ID variable
             q.put(message)
 
 ############################
@@ -238,12 +249,12 @@ try:
                 print('can0swc:phone')
                 time.sleep(0.5)
 
-            if message.arbitration_id == SWC2 and message.data[6] == SWC_MODE[0]:
-                print('mode button')
-                time.sleep(0.5)
-            if message.arbitration_id == SWC2 and message.data[6] == SWC_MODE[1]:
-                print('mode button')
-                time.sleep(0.5)
+#            if message.arbitration_id == SWC2 and message.data[6] == SWC_MODE[0]:
+ #               print('mode button')
+  #              time.sleep(0.5)
+ #           if message.arbitration_id == SWC2 and message.data[6] == SWC_MODE[1]:
+#                print('mode button')
+  #              time.sleep(0.5)
 
 ############################
 #ICC Buttons
@@ -252,29 +263,58 @@ try:
                 device.emit_click(uinput.KEY_VOLUMEUP)
                 device.emit_click(uinput.KEY_E)
                 print('can0icc:volup')
-#            if message.arbitration_id == ICC and message.data[3] == ICC_VOLDOWN:
-#
- #           if message.arbitration_id == ICC and message.data[0] == ICC_NEXT:
-#
+            if message.arbitration_id == ICC and message.data[3] == ICC_VOLDOWN:
+                device.emit_click(uinput.KEY_VOLUMEDOWN) #voldown openauto
+                device.emit_click(uinput.KEY_R) #voldown opendash
+                print('can0icc:voldown')
+                time.sleep(0.1)
+
+            if message.arbitration_id == ICC and message.data[0] == ICC_NEXT:
+                device.emit_click(uinput.KEY_N)
+                print('can0icc:next')wwwwwwwwwww
+                time.sleep(0.1)
+
             if message.arbitration_id == ICC and message.data[0] == ICC_PREV:
                 device.emit_click(uinput.KEY_C)
                 print('can0icc:prev')
                 time.sleep(0.1)
-            if message.arbitration_id == ICC and message.data[2] == ICC_PWR:
-                #os.system("sudo reboot")
-                print('can0icc:pwr')
+#            if message.arbitration_id == ICC and message.data[2] == ICC_PWR:
+#              #os.system("sudo reboot")
+#              print('can0icc:pwr')
                 time.sleep(0.1)
+
             if message.arbitration_id == ICC and message.data[0] == ICC_MENU:
-                os.system("sudo systemctl start dash")
+   #             os.system("sudo systemctl start dash")
+                print('can0icc:menu')
+                time.sleep(0.1)
+
             if message.arbitration_id == ICC and message.data[2] == ICC_OK:
                 print('can0icc:ok')
                 time.sleep(0.1)
+
             if message.arbitration_id == ICC and message.data[1] == ICC_LOAD:
-                os.system("sudo ~/home/openauto/bin/autoapp")
-                print('can0icc:eject')
+                os.system("/home/pi/openauto/bin/autoapp")
+                print('can0icc:load')
                 time.sleep(0.1)
+
             if message.arbitration_id == ICC and message.data[1] == ICC_EJECT:
                 os.system("sudo systemctl stop dash")
+                print('can0icc:eject')
+                time.sleep(0.1)
+#############################
+#BEM Buttons
+#############################
+
+            #if message.arbitration_id == BEM and message.data[3] == UNLOCK:
+
+            #if message.arbitration_id == BEM and message.data[3] == LOCK:
+
+            #if message.arbitration_id == BEM and message.data[3] == DSC:
+
+            #if message.arbitration_id == BEM and message.data[3] == LIGHT:
+
+            #if message.arbitration_id == BEM and message.data[3] == HAZARD:
+                
 #############
 except KeyboardInterrupt:
     exit()
