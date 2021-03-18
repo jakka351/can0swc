@@ -1,10 +1,10 @@
-
+<p align="center">
 
 ![](https://raw.githubusercontent.com/jakka351/can0swc/main/can.jpg)  
 ***
 # FG Falcon SWC Adapter [![GitHub issues](https://img.shields.io/github/issues/jakka351/can0swc?style=social)](https://github.com/jakka351/can0swc/issues) ![image](https://img.shields.io/badge/github-can0swc-yellowgreen) ![GitHub last commit](https://img.shields.io/github/last-commit/jakka351/can0swc)       
 
-
+</p>
 
   ### Steering Wheel Controls adaptor for mk1 FG
   
@@ -124,11 +124,4 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
    -- [Webjocke canbus to keypress](https://github.com/webjocke/Python-CAN-bus-to-Keypresses) 
    
 ![](https://www.raspberrypi.org/app/uploads/2017/06/Powered-by-Raspberry-Pi-Logo_Outline-Colour-Screen-500x153.png)  
-     
-     ██████  █████  ███    ██  ██████  ███████ ██     ██  ██████     
-    ██      ██   ██ ████   ██ ██  ████ ██      ██     ██ ██                 
-    ██      ███████ ██ ██  ██ ██ ██ ██ ███████ ██  █  ██ ██                 
-    ██      ██   ██ ██  ██ ██ ████  ██      ██ ██ ███ ██ ██                 
-     ██████ ██   ██ ██   ████  ██████  ███████  ███ ███   ██████            
-                                                                          
--
+     ***
