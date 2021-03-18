@@ -1,13 +1,14 @@
+# FG Falcon SWC Adapter    
+  
+  
 <p align="center">
 
-![](https://raw.githubusercontent.com/jakka351/can0swc/main/can.jpg)  
-***
-# FG Falcon SWC Adapter [![GitHub issues](https://img.shields.io/github/issues/jakka351/can0swc?style=social)](https://github.com/jakka351/can0swc/issues) ![image](https://img.shields.io/badge/github-can0swc-yellowgreen) ![GitHub last commit](https://img.shields.io/github/last-commit/jakka351/can0swc)       
-
+<img src="https://raw.githubusercontent.com/jakka351/can0swc/main/can.jpg" /> 
 </p>
-
+<img src="https://img.shields.io/github/issues/jakka351/can0swc?style=social" href="https://github.com/jakka351/can0swc/issues"><img src="https://img.shields.io/badge/github-can0swc-yellowgreen"><img src="https://img.shields.io/github/last-commit/jakka351/can0swc">    
+     
   ### Steering Wheel Controls adaptor for mk1 FG
-  
+  ***
   Uses the python-can library to listen for pushes of steering wheel buttons, which are visible on the Falcon's mid-speed controller area network with CAN ID 0x2F2. Also listens for ICC button pushes on CAN ID 0x2FC and BEM functions on 0x307. When a button is pushed, the script emulates a keypress on the Raspberry Pi. This is used here with [OpenDash's](https://github.com/opendsh/dash) implementation of Android Auto emulator [Openauto]() to control basic media functions. The Car used is an Ford FG mk1 Falcon with, the ICC from the vehicle has had the CD player removed and the main screen replaced with a Raspberry Pi 7 Inch Screen.    
   
   ### [Basic Breakdown of Steering Wheel Controls for FG Falcon](https://github.com/jakka351/FG-Falcon/wiki/Steering-Wheel-Media-Controls)    
@@ -43,15 +44,16 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
  **SBC:** Raspberry Pi 4B - 8gb, PiCan2 Hat, i2s audio hat  
  **Other:** Modified OBD-DB9 Cable, 7" Official Touchscreen, 2 Metre DSI Ribbon Cable, heatsink case, fans, enclosure, 12vdc-5vdc converter   
   
-  #### Unit Diagram  
+  #### Unit Diagram
+ <p align="center">
 <img src="https://raw.githubusercontent.com/jakka351/can0swc/main/falcon.png" width="500" height="500" />  
-   
+ </p>  <br/>
   #### Actual Unit 
-<img src="https://raw.githubusercontent.com/jakka351/can0swc/main/canpii.jpg" width="300" height="425"> <img src="https://raw.githubusercontent.com/jakka351/can0swc/main/test%20(1).jpg" width="325" height="425" /> 
-
+<p align="center">
+<img src="https://raw.githubusercontent.com/jakka351/can0swc/main/canpii.jpg" width="300" height="425"> 
+  <br/><img src="https://raw.githubusercontent.com/jakka351/can0swc/main/test%20(1).jpg" width="325" height="425" /> 
+</p><br/>
   
-
-
 ***  
   
 ### Installation, Dependencies & Config
@@ -76,7 +78,7 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
          `    pre-up /sbin/ip link set can0 type can bitrate 125000 triple-sampling on restart-ms 100 `    
          `    up /sbin/ifconfig can0 up txqueuelen 65535   `   
          `    down /sbin/ifconfig can0 down `    
-   - Bring the can0 interface up  
+ - Bring the can0 interface up  
          `sudo ip link set can0 type can bitrate 125000 triple-sampling on restart-ms 100 `   
          `sudo ifconfig can0 up txqueuelen 65535 ` 
           
@@ -124,4 +126,4 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
    -- [Webjocke canbus to keypress](https://github.com/webjocke/Python-CAN-bus-to-Keypresses) 
    
 ![](https://www.raspberrypi.org/app/uploads/2017/06/Powered-by-Raspberry-Pi-Logo_Outline-Colour-Screen-500x153.png)  
-     ***
+***
