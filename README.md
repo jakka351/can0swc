@@ -1,15 +1,11 @@
-# FG Falcon SWC Adapter    
-  
-  
-<p align="center">
-
+# FG Falcon - Steering Wheel Media Controls  
 <img src="https://raw.githubusercontent.com/jakka351/can0swc/main/can.jpg" /> 
-</p>
-<img src="https://img.shields.io/github/issues/jakka351/can0swc?style=social" href="https://github.com/jakka351/can0swc/issues"><img src="https://img.shields.io/badge/github-can0swc-yellowgreen"><img src="https://img.shields.io/github/last-commit/jakka351/can0swc">    
+<img src="https://img.shields.io/badge/github-can0swc-yellowgreen"><img src="https://img.shields.io/github/last-commit/jakka351/can0swc">    
      
   ### Steering Wheel Controls adaptor for mk1 FG
   ***
-  Uses the python-can library to listen for pushes of steering wheel buttons, which are visible on the Falcon's mid-speed controller area network with CAN ID 0x2F2. Also listens for ICC button pushes on CAN ID 0x2FC and BEM functions on 0x307. When a button is pushed, the script emulates a keypress on the Raspberry Pi. This is used here with [OpenDash's](https://github.com/opendsh/dash) implementation of Android Auto emulator [Openauto]() to control basic media functions. The Car used is an Ford FG mk1 Falcon with, the ICC from the vehicle has had the CD player removed and the main screen replaced with a Raspberry Pi 7 Inch Screen.    
+  Uses the python-can library to listen for pushes of steering wheel buttons, which are visible on the Falcon's mid-speed controller area network with CAN ID 0x2F2. Also listens for ICC button pushes on CAN ID 0x2FC and BEM functions on 0x307.
+    When a button is pushed, the script emulates a keypress on the Raspberry Pi. This is used here with [OpenDash's](https://github.com/opendsh/dash) implementation of Android Auto emulator [Openauto]() to control basic media functions. The Car used is an Ford FG mk1 Falcon. The factory display from the vehicle has been replaced with a Raspberry Pi 7 Inch Touchscreen.    
   
   ### [Basic Breakdown of Steering Wheel Controls for FG Falcon](https://github.com/jakka351/FG-Falcon/wiki/Steering-Wheel-Media-Controls)    
                                    
@@ -17,27 +13,9 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
 
  --  [Relevant ICC Diagrams + Pinouts](https://github.com/jakka351/FG-Falcon/wiki/Interior-Command-Centre)  
     
-  
-   
-  ### CAN Data  
-
-   | Address | Data    | Function | Byte1      | Byte2      | Byte3 | Byte4 | Byte5 | Byte6 | Byte7   | Byte8   |
-| ------- | ----    | -------- | -----      | -----      | ----- | ----- | ----- | ----- | -----   | -----   |
-| `754`   | 8 bytes | Volume Data  | 0x00| x | x | x | x | x | x | x |  
-| `754`   | 8 bytes | Seek  | x | x | x | x | x | x | x | 0x08* |  
-| `754`   | 8 bytes | Volume Up  | x | x | x | x | x | x | x | 0x10* |  
-| `754`   | 8 bytes | Volume Down  | x| x | x | x | x | x | x | 0x18* |  
-| `754`   | 8 bytes | Phone  | x| x | x | x | x | x | 0x61** | x |  
-| `748`   | 8 bytes | Mode  | x| x | x | x | x | x | 0x10 | x |  
-
-***
-*+1 depending on audio mode  
-**65 or 68 depending on audio mode  
-***
-  
+  ***
 ### Hardware
 
-  
  **Vehicle:** FG Falcon mk1   
  **Interface:** SocketCAN can0 interface, MCP2515 chipset, Midspeed-CAN@125kbps  
  **Software:**  Can-Utils, Python-Can, Openauto, Opendash, Raspbian   
@@ -117,6 +95,23 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
   
   <img src="https://github.com/jakka351/FG-Falcon/blob/master/resources/images/36042a635002807104849f240acc63e5.jpg" width="600" height="600" />    
   <img src="https://raw.githubusercontent.com/jakka351/FG-Falcon/master/resources/images/plug_dlc.png" width="600" height="600" /> 
+
+
+  ### CAN Data  
+
+   | Address | Data    | Function | Byte1      | Byte2      | Byte3 | Byte4 | Byte5 | Byte6 | Byte7   | Byte8   |
+| ------- | ----    | -------- | -----      | -----      | ----- | ----- | ----- | ----- | -----   | -----   |
+| `754`   | 8 bytes | Volume Data  | 0x00| x | x | x | x | x | x | x |  
+| `754`   | 8 bytes | Seek  | x | x | x | x | x | x | x | 0x08* |  
+| `754`   | 8 bytes | Volume Up  | x | x | x | x | x | x | x | 0x10* |  
+| `754`   | 8 bytes | Volume Down  | x| x | x | x | x | x | x | 0x18* |  
+| `754`   | 8 bytes | Phone  | x| x | x | x | x | x | 0x61** | x |  
+| `748`   | 8 bytes | Mode  | x| x | x | x | x | x | 0x10 | x |  
+
+***
+*+1 depending on audio mode  
+**65 or 68 depending on audio mode  
+***
   
   ### Use in Different Vehicles  
   There is a templated version of the script that can be used to make your own version of can0swc, named as 'template.py'. 
