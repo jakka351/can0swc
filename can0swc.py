@@ -2,6 +2,7 @@
 #can0swc fg falcon swc-can adapter
 #https://github.com/jakka351/FG-Falcon | https://github.com/jakka351/can0swc
 import can
+from can import bus
 import time
 import os
 import uinput
@@ -12,13 +13,15 @@ import sys, traceback
 # Define Keypresses
 ############################
 device = uinput.Device([
-
         uinput.KEY_N,
         uinput.KEY_VOLUMEUP,
         uinput.KEY_VOLUMEDOWN,
         uinput.KEY_C,
         uinput.KEY_W,
         ])
+############################
+c = ''
+count = 0  
 ############################
 # CAN Id's
 ############################
@@ -41,36 +44,33 @@ ICC_PREV               = 0x08 #[0]
 ICC_EJECT              = 0x80 #[1]
 ICC_LOAD               = 0x40 #[1]
 
-print('         ██████  █████  ███    ██  ██████  ███████ ██     ██  ██████    ')
-time.sleep(0.15)
-print('        ██      ██   ██ ████   ██ ██  ████ ██      ██     ██ ██         ')
-time.sleep(0.15)
-print('        ██      ███████ ██ ██  ██ ██ ██ ██ ███████ ██  █  ██ ██         ')
-time.sleep(0.15)
-print('        ██      ██   ██ ██  ██ ██ ████  ██      ██ ██ ███ ██ ██         ')
-time.sleep(0.15)
-print('         ██████ ██   ██ ██   ████  ██████  ███████  ███ ███   ██████    ')
-time.sleep(0.15)
-print('      ┌─┐┌─┐┌┐┌┌┬┐┬─┐┌─┐┬  ┬  ┌─┐┬─┐  ┌─┐┬─┐┌─┐┌─┐  ┌┐┌┌─┐┌┬┐┬ ┬┌─┐┬─┐┬┌─  ')
-time.sleep(0.15)
-print('      │  │ ││││ │ ├┬┘│ ││  │  ├┤ ├┬┘  ├─┤├┬┘├┤ ├─┤  │││├┤  │ ││││ │├┬┘├┴┐  ')
-time.sleep(0.15)
-print('      └─┘└─┘┘└┘ ┴ ┴└─└─┘┴─┘┴─┘└─┘┴└─  ┴ ┴┴└─└─┘┴ ┴  ┘└┘└─┘ ┴ └┴┘└─┘┴└─┴ ┴  ')
+def scroll():
+        print('         ██████  █████  ███    ██  ██████  ███████ ██     ██  ██████    ')
+        time.sleep(0.15)
+        print('        ██      ██   ██ ████   ██ ██  ████ ██      ██     ██ ██         ')
+        time.sleep(0.15)
+        print('        ██      ███████ ██ ██  ██ ██ ██ ██ ███████ ██  █  ██ ██         ')
+        time.sleep(0.15)
+        print('        ██      ██   ██ ██  ██ ██ ████  ██      ██ ██ ███ ██ ██         ')
+        time.sleep(0.15)
+        print('         ██████ ██   ██ ██   ████  ██████  ███████  ███ ███   ██████    ')
+        time.sleep(0.15)
+        print('      ┌─┐┌─┐┌┐┌┌┬┐┬─┐┌─┐┬  ┬  ┌─┐┬─┐  ┌─┐┬─┐┌─┐┌─┐  ┌┐┌┌─┐┌┬┐┬ ┬┌─┐┬─┐┬┌─  ')
+        time.sleep(0.15)
+        print('      │  │ ││││ │ ├┬┘│ ││  │  ├┤ ├┬┘  ├─┤├┬┘├┤ ├─┤  │││├┤  │ ││││ │├┬┘├┴┐  ')
+        time.sleep(0.15)
+        print('      └─┘└─┘┘└┘ ┴ ┴└─└─┘┴─┘┴─┘└─┘┴└─  ┴ ┴┴└─└─┘┴ ┴  ┘└┘└─┘ ┴ └┴┘└─┘┴└─┴ ┴  ')
 
-##########################
-#midspeed-can 
-##########################
-os.system("sudo /sbin/ip link set can0 type can bitrate 125000 triple-sampling on restart-ms 1000")
-os.system("sudo /sbin/ifconfig can0 up txqueuelen 100")
-os.system("sudo modprobe uinput")  
-try:
-    bus = can.interface.Bus(channel='can0', bustype='socketcan_native')
-except OSError:
-    sys.exit()
-
-############################
-# CAN Rx
-############################
+def setup():
+    global bus
+  #      os.system("sudo /sbin/ip link set can0 type can bitrate 125000 triple-sampling on restart-ms 1000")
+   #     os.system("sudo /sbin/ifconfig can0 up txqueuelen 100")
+    os.system("sudo modprobe uinput")  
+    try:
+        bus = can.interface.Bus(channel='vcan0', bustype='socketcan_native')
+    except OSError:
+        sys.exit()
+                
 def can_rx_task():                                               # rx can frames only with CAN_ID specified in SWC variable
     while True:
         message = bus.recv()
@@ -83,89 +83,87 @@ def can_rx_task():                                               # rx can frames
 ############################
 # Rx Queue
 ############################
-q = queue.Queue()
-rx = Thread(target = can_rx_task)
-rx.start()
-c = ''
-count = 0
 ############################
 # Main Loop
 ############################
-try:
-    while True:
-        for i in range(8):
-            while(q.empty() == True):       # Wait until there is a message
-                pass
-            message = q.get()
-            c = '{0:f},{1:d},'.format(message.timestamp,count)
-            ###########################
-            #Steering Wheel Buttons
-            ###########################
-            if message.arbitration_id == SWC:
-                if message.data[7] == SWC_SEEK[0]:
-                    device.emit_click(uinput.KEY_N)  #next song
-                    time.sleep(0.1)
-                elif message.data[7] == SWC_SEEK[1]:
-                    device.emit_click(uinput.KEY_N)  #next song
-                    time.sleep(0.1)
-                elif message.data[7] == SWC_SEEK[2]:
-                    device.emit_click(uinput.KEY_N)  #next song
-                    time.sleep(0.1)
-                elif message.data[7] == SWC_VOLUP[0]:
-                    device.emit_click(uinput.KEY_VOLUMEUP) #volup openauto
-                    time.sleep(0.01)
-                elif message.data[7] == SWC_VOLUP[1]:
-                    device.emit_click(uinput.KEY_VOLUMEUP) #volup openauto
-                    time.sleep(0.01)
-                elif message.data[7] == SWC_VOLUP[2]:
-                    device.emit_click(uinput.KEY_VOLUMEUP) #volup openauto
-                    time.sleep(0.01)
-                elif message.data[7] == SWC_VOLDOWN[0]:
-                    device.emit_click(uinput.KEY_VOLUMEDOWN) #voldown openauto
-                    time.sleep(0.01)
-                elif message.data[7] == SWC_VOLDOWN[1]:
-                    device.emit_click(uinput.KEY_VOLUMEDOWN) #voldown openauto
-                    time.sleep(0.01)
-                elif message.data[7] == SWC_VOLDOWN[2]:
-                    device.emit_click(uinput.KEY_VOLUMEDOWN) #voldown openauto
-                    time.sleep(0.01)
-                if message.data[6] == SWC_PHONE[0]:
-                    device.emit_click(uinput.KEY_W) #opendash cycle pages
-                    time.sleep(1.0)
-                elif message.data[6] == SWC_PHONE[1]:
-                    device.emit_click(uinput.KEY_W) #opendash cycle pages
-                    time.sleep(1.0)
-                elif message.data[6] == SWC_PHONE[2]:
-                    device.emit_click(uinput.KEY_W) #opendash cycle pages
-                    time.sleep(1.0)
-                ############################
-                #ICC Buttons
-                ############################
-            if message.arbitration_id == ICC:
-                if message.data[3] == ICC_VOLUP:
-                    device.emit_click(uinput.KEY_VOLUMEUP)
-                elif message.data[3] == ICC_VOLDOWN:
-                    device.emit_click(uinput.KEY_VOLUMEDOWN) 
-                elif message.data[0] == ICC_NEXT:
-                    device.emit_click(uinput.KEY_N)
-                elif message.data[0] == ICC_PREV:
-                    device.emit_click(uinput.KEY_C)
-                elif message.data[1] == ICC_LOAD:
-                    os.system("sudo systemctl start dash.service")
-                elif message.data[1] == ICC_EJECT:
-                    os.system("sudo systemctl stop dash.service")
-            else:
-                pass
+def main():
+        try:
+                while True:
+                        for i in range(8):
+                                while(q.empty() == True):       # Wait until there is a message
+                                        pass
+                                message = q.get()
+                                c = '{0:f},{1:d},'.format(message.timestamp,count)
+                                if message.arbitration_id == SWC:
+                                        if message.data[7] == SWC_SEEK[0]:
+                                                device.emit_click(uinput.KEY_N)  #next song
+                                                time.sleep(0.1)
+                                        elif message.data[7] == SWC_SEEK[1]:
+                                                device.emit_click(uinput.KEY_N)  #next song
+                                                time.sleep(0.1)
+                                        elif message.data[7] == SWC_SEEK[2]:
+                                                device.emit_click(uinput.KEY_N)  #next song
+                                                time.sleep(0.1)
+                                        elif message.data[7] == SWC_VOLUP[0]:
+                                                device.emit_click(uinput.KEY_VOLUMEUP) #volup openauto
+                                                time.sleep(0.01)
+                                        elif message.data[7] == SWC_VOLUP[1]:
+                                                device.emit_click(uinput.KEY_VOLUMEUP) #volup openauto
+                                                time.sleep(0.01)
+                                        elif message.data[7] == SWC_VOLUP[2]:
+                                                device.emit_click(uinput.KEY_VOLUMEUP) #volup openauto
+                                                time.sleep(0.01)
+                                        elif message.data[7] == SWC_VOLDOWN[0]:
+                                                device.emit_click(uinput.KEY_VOLUMEDOWN) #voldown openauto
+                                                time.sleep(0.01)
+                                        elif message.data[7] == SWC_VOLDOWN[1]:
+                                                device.emit_click(uinput.KEY_VOLUMEDOWN) #voldown openauto
+                                                time.sleep(0.01)
+                                        elif message.data[7] == SWC_VOLDOWN[2]:
+                                                device.emit_click(uinput.KEY_VOLUMEDOWN) #voldown openauto
+                                                time.sleep(0.01)
+                                        if message.data[6] == SWC_PHONE[0]:
+                                                device.emit_click(uinput.KEY_W) #opendash cycle pages
+                                                time.sleep(1.0)
+                                        elif message.data[6] == SWC_PHONE[1]:
+                                                device.emit_click(uinput.KEY_W) #opendash cycle pages
+                                                time.sleep(1.0)
+                                        elif message.data[6] == SWC_PHONE[2]:
+                                                device.emit_click(uinput.KEY_W) #opendash cycle pages
+                                                time.sleep(1.0)
+                                elif message.arbitration_id == ICC:
+                                        if message.data[3] == ICC_VOLUP:
+                                                 device.emit_click(uinput.KEY_VOLUMEUP)
+                                        elif message.data[3] == ICC_VOLDOWN:
+                                                device.emit_click(uinput.KEY_VOLUMEDOWN) 
+                                        elif message.data[0] == ICC_NEXT:
+                                                device.emit_click(uinput.KEY_N)
+                                        elif message.data[0] == ICC_PREV:
+                                                device.emit_click(uinput.KEY_C)
+                                        elif message.data[1] == ICC_LOAD:
+                                                os.system("sudo systemctl start dash.service")
+                                        elif message.data[1] == ICC_EJECT:
+                                                os.system("sudo systemctl stop dash.service")
+                                else:
+                                        pass
 
-except KeyboardInterrupt:
-    sys.exit()
-except Exception:
-    traceback.print_exc(file=sys.stdout)
-    sys.exit()
-except OSError:
-    sys.exit()
+        except KeyboardInterrupt:
+                sys.exit()
+        except Exception:
+                traceback.print_exc(file=sys.stdout)
+                sys.exit()
+        except OSError:
+                sys.exit()
 
 ############################
 # can0swc
 ############################
     
+
+if __name__ == "__main__":
+        scroll()
+        setup()
+        q = queue.Queue()
+        rx = Thread(target = can_rx_task)
+        rx.start()
+        main()
