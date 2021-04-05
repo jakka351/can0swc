@@ -99,7 +99,6 @@ def cleanscreen():                    # cleans the whole console screen
     os.system("clear")
 
 def main():
-#    global c, count, message, q 
     try:
         while True:
             for i in range(8):
@@ -113,21 +112,21 @@ def main():
                         cleanline()                                     # cleans last frame
                         cleanline()                                     # cleans last button push
                         print(message)                                  # print new can frame
-                        print("SWCSeekBtn Pushed")                      # print button push
+                        print("SWCSeekBtn pushed @", message.timestamp)                      # print button push
                         
                     elif message.data[7] == SWC_SEEK[1]:
                         #device.emit_click(uinput.KEY_N)  #next song
                         cleanline()
                         cleanline()                       
                         print(message)
-                        print("SWCSeekBtn Pushed")
+                        print("SWCSeekBtn pushed @", message.timestamp)
 
                     elif message.data[7] == SWC_SEEK[2]:
                         #device.emit_click(uinput.KEY_N)  #next song
                         cleanline()
                         cleanline()
                         print(message)
-                        print("SWCSeekBtn Pushed")
+                        print("SWCSeekBtn pushed @", message.timestamp)
                        
                     elif message.data[7] == SWC_VOLUP[0]:
                         #device.emit_click(uinput.KEY_VOLUMEUP) #volup openauto
@@ -135,63 +134,63 @@ def main():
                         cleanline()
                         cleanline()
                         print(message)
-                        print("SWCVolUpBtn Pushed")
+                        print("SWCVolUpBtn pushed @", message.timestamp)
                         
                     elif message.data[7] == SWC_VOLUP[1]:
                         #device.emit_click(uinput.KEY_VOLUMEUP) #volup openauto
                         cleanline()
                         cleanline()
                         print(message)
-                        print("SWCVolUpBtn Pushed")
+                        print("SWCVolUpBtn pushed @", message.timestamp)
                         
                     elif message.data[7] == SWC_VOLUP[2]:
                         #device.emit_click(uinput.KEY_VOLUMEUP) #volup openauto
                         cleanline()
                         cleanline()
                         print(message)
-                        print("SWCVolUpBtn Pushed")
+                        print("SWCVolUpBtn pushed @", message.timestamp)
                         
                     elif message.data[7] == SWC_VOLDOWN[0]:
                         #device.emit_click(uinput.KEY_VOLUMEDOWN) #voldown openauto
                         cleanline()
                         cleanline()
                         print(message)
-                        print("SWCVolDownBtn Pushed")
+                        print("SWCVolDownBtn pushed @", message.timestamp)
                         
                     elif message.data[7] == SWC_VOLDOWN[1]:
                         #device.emit_click(uinput.KEY_VOLUMEDOWN) #voldown openauto
                         cleanline()
                         cleanline()
                         print(message)
-                        print("SWCVolDownBtn Pushed")
+                        print("SWCVolDownBtn pushed @", message.timestamp)
                         
                     elif message.data[7] == SWC_VOLDOWN[2]:
                         #device.emit_click(uinput.KEY_VOLUMEDOWN) #voldown openauto
                         cleanline()
                         cleanline()
                         print(message)
-                        print("SWCVolDownBtn Pushed")
+                        print("SWCVolDownBtn pushed @", message.timestamp)
                         
                     elif message.data[6] == SWC_PHONE[0]:
                         #device.emit_click(uinput.KEY_W) #opendash cycle pages
                         cleanline()
                         cleanline()
                         print(message)
-                        print("SWCPhoneBtn Pushed")
+                        print("SWCPhoneBtn pushed @", message.timestamp)
                         
                     elif message.data[6] == SWC_PHONE[1]:
                         #device.emit_click(uinput.KEY_W) #opendash cycle pages
                         cleanline()
                         cleanline()
                         print(message)
-                        print("SWCPhoneBtn Pushed")
+                        print("SWCPhoneBtn pushed @", message.timestamp)
                         
                     elif message.data[6] == SWC_PHONE[2]:
                         #device.emit_click(uinput.KEY_W) #opendash cycle pages
                         cleanline()
                         cleanline()
                         print(message)
-                        print("SWCPhoneBtn Pushed")
+                        print("SWCPhoneBtn pushed @", message.timestamp)
                         
                 elif message.arbitration_id == ICC:
                     if message.data[3] == ICC_VOLUP:
@@ -199,42 +198,42 @@ def main():
                         cleanline()
                         cleanline()
                         print(message)
-                        print("ICCVolUpBtn Pushed")
+                        print("ICCVolUpBtn pushed @", message.timestamp)
                         
                     elif message.data[3] == ICC_VOLDOWN:
                         #device.emit_click(uinput.KEY_VOLUMEDOWN) 
                         cleanline()
                         cleanline()
                         print(message)
-                        print("ICCVolDownBtn Pushed")
+                        print("ICCVolDownBtn pushed @", message.timestamp)
                         
                     elif message.data[0] == ICC_NEXT:
                         #device.emit_click(uinput.KEY_N)
                         cleanline()
                         cleanline()
                         print(message)
-                        print("ICCSeekUpBtn Pushed")
+                        print("ICCSeekUpBtn pushed @", message.timestamp)
                         
                     elif message.data[0] == ICC_PREV:
                         #device.emit_click(uinput.KEY_C)
                         cleanline()
                         cleanline()
                         print(message)
-                        print("ICCSeekDownBtn Pushed")
+                        print("ICCSeekDownBtn pushed @", message.timestamp)
                         
                     elif message.data[1] == ICC_LOAD:
                         #os.system("sudo systemctl start dash.service")
                         cleanline()
                         cleanline()
                         print(message)
-                        print("ICCLoadBtn Pushed")
+                        print("ICCLoadBtn pushed @", message.timestamp)
                         
                     elif message.data[1] == ICC_EJECT:
                         #os.system("sudo systemctl stop dash.service")
                         cleanline()
                         cleanline()
                         print(message)
-                        print("ICCEjectBtn Pushed")
+                        print("ICCEjectBtn pushed @", message.timestamp)
                                           
 
     except KeyboardInterrupt:
