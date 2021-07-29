@@ -170,8 +170,11 @@ def main():
                         cleanline()
                         print(message)
                         print("SWCVolDownBtn pushed @", message.timestamp)
-                        
-                    elif message.data[6] == SWC_PHONE[0]:
+
+                    else:
+                        pass
+
+                    if message.data[6] == SWC_PHONE[0]:
                         #device.emit_click(uinput.KEY_W) #opendash cycle pages
                         cleanline()
                         cleanline()
@@ -191,8 +194,11 @@ def main():
                         cleanline()
                         print(message)
                         print("SWCPhoneBtn pushed @", message.timestamp)
-                        
-                elif message.arbitration_id == ICC:
+                    
+                    else:
+                        pass
+
+                if message.arbitration_id == ICC:
                     if message.data[3] == ICC_VOLUP:
                         #device.emit_click(uinput.KEY_VOLUMEUP)
                         cleanline()
@@ -234,8 +240,10 @@ def main():
                         cleanline()
                         print(message)
                         print("ICCEjectBtn pushed @", message.timestamp)
-                                          
 
+                    else:
+                        pass
+                                                                           
     except KeyboardInterrupt:
         sys.exit(0)                                              # quit if ctl + c is hit
     except Exception:
