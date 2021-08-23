@@ -46,7 +46,9 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
           
    #### Set Up CAN interface    
    - Add the following to the 'config.txt' file in the /boot partition of the Raspberry Pi sd card.   
-       `dtoverlay=mcp2515-can0,oscillator=8000000,interrupt=25`    
+       ```shell
+       dtoverlay=mcp2515-can0,oscillator=8000000,interrupt=25
+       ```   
    - If using a PiCan Board set oscillator to 16000000  
        `oscillator=16000000`  
 
