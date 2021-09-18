@@ -1,6 +1,7 @@
 #!/usr/bin/python3
-#can0swc fg falcon swc-can adapter
-#https://github.com/jakka351/FG-Falcon | https://github.com/jakka351/can0swc
+# can0swc fg falcon swc-can adapter
+# https://github.com/jakka351/FG-Falcon | https://github.com/jakka351/can0swc
+# 
 ############################
 #import modules
 ############################
@@ -33,7 +34,7 @@ ICC                    = 0x2FC              #id 764
 BEM                    = 0x307
 INTACTTEMP             = 0x313
 # SWC Button CAN Data
-SWC_SEEK               = (0x08, 0x09, 0x0C)  # seek button on bit [7] of id 0x2f2
+SWC_SEEK               = (0x08, 0x09, 0x0C)  # seek button on byte [7] of id 0x2f2
 SWC_VOLUP              = (0x10, 0x11, 0x14)  # volume + button on bit [7] of id 0x2f2
 SWC_VOLDOWN            = (0x18, 0x19, 0x1C)  # volume - button on bit [7] of id 0x2f2
 SWC_PHONE              = (0x61, 0x65, 0x68)  # phone button on bit [6] of id 0x2f2
@@ -140,6 +141,10 @@ def cleanline():                      # cleans the last output line from the con
 def cleanscreen():                    # cleans the whole console screen
     os.system("clear")
 
+
+#def settings():
+#        message_setting = 
+
 def main():
     try:
         while True:
@@ -150,19 +155,20 @@ def main():
                 c = '{0:f},{1:d},'.format(message.timestamp,count)
                 if message.arbitration_id == SWC:                       # if the can id is the same as variable,     
                     if message.data[7] in SWC_SEEK:                  # and the message data of bit x matches from list
-                        #device.emit_click(uinput.KEY_N)                # then emulate a keypress
+                        device.emit_click(uinput.KEY_N)                # then emulate a keypress
                         cleanline()                                     # cleans last frame
                         cleanline()                                     # cleans last button push
                         print(message)                                  # print new can frame
                         print("SWCSeekBtn pushed @", message.timestamp)                      # print button push
+                        time.sleep(0.2)
                         
                     elif message.data[7] in SWC_VOLUP:
-                        #device.emit_click(uinput.KEY_VOLUMEUP) #volup openauto
-                        time.sleep(0.2)
+                        device.emit_click(uinput.KEY_VOLUMEUP) #volup openauto
                         cleanline()
                         cleanline()
                         print(message)
                         print("SWCVolUpBtn pushed @", message.timestamp)
+                        time.sleep(0.2)
                         
                     elif message.data[7] == SWC_VOLDOWN:
                         #device.emit_click(uinput.KEY_VOLUMEDOWN) #voldown openauto
@@ -170,6 +176,7 @@ def main():
                         cleanline()
                         print(message)
                         print("SWCVolDownBtn pushed @", message.timestamp)
+                        time.sleep(0.2)
                         
                     elif message.data[6] in SWC_PHONE:
                         #device.emit_click(uinput.KEY_W) #opendash cycle pages
@@ -177,6 +184,7 @@ def main():
                         cleanline()
                         print(message)
                         print("SWCPhoneBtn pushed @", message.timestamp)
+                        time.sleep(0.2)
                         
                     else:
                         pass
@@ -188,6 +196,7 @@ def main():
                         cleanline()
                         print(message)
                         print("ICCVolUpBtn pushed @", message.timestamp)
+                        time.sleep(0.2)
                         
                     elif message.data[3] == ICC_VOLDOWN:
                         #device.emit_click(uinput.KEY_VOLUMEDOWN) 
@@ -195,6 +204,7 @@ def main():
                         cleanline()
                         print(message)
                         print("ICCVolDownBtn pushed @", message.timestamp)
+                        time.sleep(0.2)
                         
                     elif message.data[0] == ICC_NEXT:
                         #device.emit_click(uinput.KEY_N)
@@ -202,6 +212,7 @@ def main():
                         cleanline()
                         print(message)
                         print("ICCSeekUpBtn pushed @", message.timestamp)
+                        time.sleep(0.2)
                         
                     elif message.data[0] == ICC_PREV:
                         #device.emit_click(uinput.KEY_C)
@@ -209,6 +220,7 @@ def main():
                         cleanline()
                         print(message)
                         print("ICCSeekDownBtn pushed @", message.timestamp)
+                        time.sleep(0.2)
                         
                     elif message.data[1] == ICC_LOAD:
                         #os.system("sudo systemctl start dash.service")
@@ -216,6 +228,7 @@ def main():
                         cleanline()
                         print(message)
                         print("ICCLoadBtn pushed @", message.timestamp)
+                        time.sleep(0.2)
                         
                     elif message.data[1] == ICC_EJECT:
                         #os.system("sudo systemctl stop dash.service")
@@ -223,7 +236,8 @@ def main():
                         cleanline()
                         print(message)
                         print("ICCEjectBtn pushed @", message.timestamp)
-                    
+                        time.sleep(0.2)
+                                            
                     else:
                         pass
                     
@@ -243,12 +257,16 @@ def main():
                     print("VehicleUnlockButton pushed @", message.timestamp)
                     
                 elif message.arbitration_id == BEM and message.data[3] == BEM_DSC:
-                    #os.system("omxplayer burnout.mp4")
-                    cleanline()
-                    cleanline()
-                    print(message)
-                    print("DynamicStabilityControlSwitch pushed @", message.timestamp)
-                    
+                    time.sleep(1.5)
+                    if message.arbitration_id == BEM and message.data[3] == BEM_DSC:
+                        #os.system("omxplayer burnout.mp4")
+                        cleanline()
+                        cleanline()
+                        print(message)
+                        print("DynamicStabilityControlSwitch pushed @", message.timestamp)
+                    else:
+                        pass
+                
                 elif message.arbitration_id == BEM and message.data[3] == BEM_DOMELIGHT:
                     #os.system("omxplayer whitelight.mp4")
                     cleanline()
@@ -262,7 +280,8 @@ def main():
                     cleanline()
                     print(message)
                     print("HazardLightSwitch pushed @", message.timestamp) 
-                
+                    time.sleep(3)
+                        
                 elif message.arbitration_id == INTACTTEMP and message.data[0] <= 0x01:
                     IntActTemp = float(message.data[0])
                     if IntActTemp != 0:
