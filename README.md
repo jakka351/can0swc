@@ -1,15 +1,6 @@
 
-# [`can0swc`](https://github.com/jakka351/can0swc)  
-<img src="https://img.shields.io/badge/github-can0swc-yellowgreen"><img src="https://img.shields.io/github/last-commit/jakka351/can0swc">    
+# [`can0swc`](https://github.com/jakka351/can0swc)    
 
-
-  - `FG Steering Wheel Controls for Raspberry Pi`
-      - Uses python-can library and SPI-CAN interface
-      - Emit keypresses which are picked up by Android Auto  
-
-     
- 
-<br/>
 <a href="https://github.com/jakka351/can0swc"><img align="" src="https://raw.githubusercontent.com/jakka351/FG-Falcon/master/resources/Screenshot%20from%202021-09-18%2011-53-10.gif" height="" width=" /></a>
     
      
@@ -19,7 +10,12 @@
 <br/>
 <br/>
 <br/>
-     
+  <img src="https://img.shields.io/badge/github-can0swc-yellowgreen"><img src="https://img.shields.io/github/last-commit/jakka351/can0swc">    
+
+
+  - `FG Steering Wheel Controls for Raspberry Pi`
+      - Uses python-can library and SPI-CAN interface
+      - Emit keypresses which are picked up by Android Auto  
   ### Steering Wheel Controls adaptor for mk1 FG
   ***
   Uses the python-can library to listen for pushes of steering wheel buttons, which are visible on the Falcon's mid-speed controller area network with CAN ID 0x2F2. Also listens for ICC button pushes on CAN ID 0x2FC and BEM functions on 0x307.
