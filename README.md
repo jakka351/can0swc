@@ -1,5 +1,12 @@
-# FG Falcon - Steering Wheel Media Controls  
-<img src="https://raw.githubusercontent.com/jakka351/can0swc/main/can0swc.gif" /> 
+
+<br />
+<a href="https://github.com/jakka351/can0swc"><img align="right" src="https://raw.githubusercontent.com/jakka351/FG-Falcon/master/resources/Screenshot%20from%202021-09-18%2011-53-10.gif" height="60%" width="60%" /></a>
+
+# [`can0swc`](https://github.com/jakka351/can0swc)  
+
+  - `FG Steering Wheel Controls for Raspberry Pi`
+      - Uses python-can library and SPI-CAN interface
+      - Emit keypresses which are picked up by Android Auto
 <img src="https://img.shields.io/badge/github-can0swc-yellowgreen"><img src="https://img.shields.io/github/last-commit/jakka351/can0swc">    
      
   ### Steering Wheel Controls adaptor for mk1 FG
