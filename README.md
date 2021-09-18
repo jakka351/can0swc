@@ -1,5 +1,5 @@
 # FG Falcon - Steering Wheel Media Controls  
-<img src="https://raw.githubusercontent.com/jakka351/can0swc/main/can.jpg" /> 
+<img src="https://raw.githubusercontent.com/jakka351/can0swc/main/can0swc.gif" /> 
 <img src="https://img.shields.io/badge/github-can0swc-yellowgreen"><img src="https://img.shields.io/github/last-commit/jakka351/can0swc">    
      
   ### Steering Wheel Controls adaptor for mk1 FG
