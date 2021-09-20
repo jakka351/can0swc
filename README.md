@@ -1,7 +1,7 @@
 
 # [`can0swc`](https://github.com/jakka351/can0swc)    
 
-<a href="https://github.com/jakka351/can0swc"><img align="" src="https://raw.githubusercontent.com/jakka351/FG-Falcon/master/resources/Screenshot%20from%202021-09-18%2011-53-10.gif" height="100%" width="100%" /></a>
+![https://raw.githubusercontent.com/jakka351/FG-Falcon/master/resources/can0swc.gif]
     
 
   <img src="https://img.shields.io/badge/github-can0swc-yellowgreen"><img src="https://img.shields.io/github/last-commit/jakka351/can0swc">    
