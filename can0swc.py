@@ -64,15 +64,16 @@ time.sleep(1)
 c                      = ''
 count                  = 0  
 # CAN Id's
-SWC                    = 0x2F2              #id 751
+SWC                    = 0x2F2 
+SWM                    = 0x2EC 
 ICC                    = 0x2FC              #id 764
 BEM                    = 0x307
 # SWC Button CAN Data
 SWC_SEEK               = (0x08, 0x09, 0x0C)  # seek button on bit [7] of id 0x2f2
 SWC_VOLUP              = (0x10, 0x11, 0x14)  # volume + button on bit [7] of id 0x2f2
 SWC_VOLDOWN            = (0x18, 0x19, 0x1C)  # volume - button on bit [7] of id 0x2f2
-SWC_PHONE              = (0x61, 0x62, 0x63, 0x64, 0x65, 0x66, 0x67, 0x68)  # phone button on bit [6] of id 0x2f2
-SWC_MODE               = 0x00
+SWC_PHONE              = (0x61, 0x62, 0x63, 0x64, 0x65, 0x66, 0x67, 0x68, 0xC1, 0xC2, 0xC3, 0xC4, 0xC5, 0xC6, 0xC7, 0xC8, )  # phone button on bit [6] of id 0x2f2
+SWC_MODE               = (0x10)
 #AudioCurrentMediaMode byte 6 0x2f2
 AUX                    = (0x01, 0x02, 0x41, 0x42, 0x47)
 CDMP3                  = (0x03, 0x43)
