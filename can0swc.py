@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+# -*- coding: utf-8 -*-
 # can0swc fg falcon swc-can adapter
 # https://github.com/jakka351/FG-Falcon | https://github.com/jakka351/can0swc
 # assumes ms-can is up on can0
@@ -10,24 +11,10 @@
 import can
 import time
 import os
-import uinput
+#import uinput
 import queue
 from threading import Thread
 import sys, traceback
-device = uinput.Device([
-         uinput.KEY_N,
-         uinput.KEY_V,
-         uinput.KEY_F,
-         uinput.KEY_B,
-         uinput.KEY_H,
-         uinput.KEY_1,
-         uinput.KEY_2,
-         uinput.KEY_O,
-         uinput.KEY_VOLUMEUP,
-         uinput.KEY_VOLUMEDOWN,
-         uinput.KEY_C,
-         uinput.KEY_W,
-         ])
 
 print("""
 #@@@@@@@@@#++++++++++@@@#++++++++%@@%+++++@@@@@@@+++#@@@++++++++++%@@%++++++++++++@%+++%@@@@@@@@+++#@@@++++++++++#@@@@@@@@@@@@
@@ -75,10 +62,10 @@ SWC_VOLDOWN            = (0x18, 0x19, 0x1C)  # volume - button on bit [7] of id 
 SWC_PHONE              = (0x61, 0x62, 0x63, 0x64, 0x65, 0x66, 0x67, 0x68, 0xC1, 0xC2, 0xC3, 0xC4, 0xC5, 0xC6, 0xC7, 0xC8, )  # phone button on bit [6] of id 0x2f2
 SWC_MODE               = (0x10)
 #AudioCurrentMediaMode byte 6 0x2f2
-AUX                    = (0x01, 0x02, 0x41, 0x42, 0x47)
+AUX                    = (0x01, 0x02, 0x41, 0x42, 0xC1)
 CDMP3                  = (0x03, 0x43)
-PHONE                  = (0x06, 0x46)
-RADIO                  = (0x05, 0x04, 0x44,0x45)
+PHONE                  = (0x06, 0x46, 0xC6)
+RADIO                  = (0x05, 0x04, 0x44, 0xC5, 0x45)
 AUDIOOFF               = (0x08, 0x48)
 # ICC Button CAN Data
 ICC_VOLUP              = 0x41 # vol + button on bit [3] of id 0x2fc
@@ -132,9 +119,9 @@ def scroll():
         
 def setup():
     global bus
-    os.system("sudo modprobe uinput") 
+ #   os.system("sudo modprobe uinput") 
     try:
-        bus = can.interface.Bus(channel='can0', bustype='socketcan_native')
+        bus = can.interface.Bus(channel='vcan0', bustype='socketcan_native')
     except OSError:
         sys.exit() # quits if there is no canbus interface
     print("                      ")
@@ -149,11 +136,6 @@ def msgbuffer():
         if message.arbitration_id == SWC:                        
             q.put(message)
 
-        if message.arbitration_id == ICC:                        
-            q.put(message)
-
-        if message.arbitration_id == BEM:                        
-            q.put(message)
 
 def displaytext():
     pass
@@ -181,133 +163,7 @@ def ccp():
     print(message)
                         
 def main(): 
-    device = uinput.Device([
-             uinput.KEY_N,
-             uinput.KEY_V,
-             uinput.KEY_F,
-             uinput.KEY_B,
-             uinput.KEY_H,
-             uinput.KEY_1,
-             uinput.KEY_2,
-             uinput.KEY_O,
-             uinput.KEY_VOLUMEUP,
-             uinput.KEY_VOLUMEDOWN,
-             uinput.KEY_C,
-             uinput.KEY_W,
-             ])
-    def SteeringWheelControls():
-                    global device
-                    if message.data[6] in AUX:
-                        if message.data[7] in SWC_SEEK:                  # and the message data of bit x matches from list
-                            device.emit_click(uinput.KEY_N)
-                            ccp()
-                            print("SWCSeekBtn pushed @", message.timestamp) 
-                            # Custom Button Function Here
-                        
-                        elif message.data[7] in SWC_VOLUP:
-                            device.emit_click(uinput.KEY_VOLUMEUP) #volup openauto
-                            time.sleep(0.2)
-                            ccp()
-                            print("SWCVolUpBtn pushed @", message.timestamp)
-                            
-                        elif message.data[7] in SWC_VOLDOWN:
-                            device.emit_click(uinput.KEY_VOLUMEDOWN) #voldown openauto
-                            ccp()
-                            print("SWCVolDownBtn pushed @", message.timestamp)
-                           
-                   elif message.data[6]  in SWC_PHONE:
-                        device.emit_click(uinput.KEY_F) #opendash cycle pages
-                        ccp()
-                        print("SWCPhoneBtn pushed @", message.timestamp)
-                            
-                    elif message.data[6] in RADIO:
-                        if message.data[7] in SWC_SEEK:                  # and the message data of bit x matches from list
-                            device.emit_click(uinput.KEY_N)
-                            ccp()
-                            print("Radio, SWCSeekBtn pushed @", message.timestamp) 
-                            # Custom Button Function Here
-                        
-                        elif message.data[7] in SWC_VOLUP:
-                            device.emit_click(uinput.KEY_VOLUMEUP) #volup openauto
-                            time.sleep(0.2)
-                            ccp()
-                            print("Radio, SWCVolUpBtn pushed @", message.timestamp)
-                            
-                        elif message.data[7] in SWC_VOLDOWN:
-                            device.emit_click(uinput.KEY_VOLUMEDOWN) #voldown openauto
-                            ccp()
-                            print("Radio, SWCVolDownBtn pushed @", message.timestamp)
-                           
-                       
-    
-                    elif message.data[6] in PHONE:
-                        if message.data[7] in SWC_SEEK:                  # and the message data of bit x matches from list
-                            device.emit_click(uinput.KEY_H)
-                            ccp()
-                            print("Phone, SWCSeekBtn pushed @", message.timestamp) 
-                            # Custom Button Function Here
-                        
-                        elif message.data[7] in SWC_VOLUP:
-                            device.emit_click(uinput.KEY_P)
-                            time.sleep(0.2)
-                            ccp()
-                            print("Phone, SWCVolUpBtn pushed @", message.timestamp)
-                            
-                        elif message.data[7] in SWC_VOLDOWN:
-                            device.emit_click(uinput.KEY_O) #voldown openauto
-                            ccp()
-                            print("Phone, SWCVolDownBtn pushed @", message.timestamp)
-                           
-                    else:
-                        pass
-                            
-    
-    def InteriorCommandCentre():
-                        global device 
-                        if message.data[3] == ICC_VOLUP:
-                            device.emit_click(uinput.KEY_VOLUMEUP)
-                            ccp()
-                            print("ICCVolUpBtn pushed @", message.timestamp)
-                            
-                        elif message.data[3] == ICC_VOLDOWN:
-                            device.emit_click(uinput.KEY_VOLUMEDOWN) 
-                            ccp()
-                            print("ICCVolDownBtn pushed @", message.timestamp)
-                            
-                        elif message.data[0] == ICC_NEXT:
-                            device.emit_click(uinput.KEY_N)
-                            ccp()
-                            print("ICCSeekUpBtn pushed @", message.timestamp)
-                            
-                        elif message.data[0] == ICC_PREV:
-                            device.emit_click(uinput.KEY_V)
-                            ccp()
-                            print("ICCSeekDownBtn pushed @", message.timestamp)
-                            
-                        elif message.data[1] == ICC_LOAD:
-                            displaytext()
-                            #os.system("raspivid -t 5000 -rot 180 -o dashcam.mp4")
-                            ccp()
-                            print("ICCLoadBtn pushed @", message.timestamp)
-                            
-                        elif message.data[1] == ICC_EJECT:
-                            cleardtc()
-                            ccp()
-                            print("ICCEjectBtn pushed @", message.timestamp)
-                        
-                        else:
-                            pass
-    
-    def BodyControlSwitches():
-                        if message.data[3] == BEM_HAZARD:
-                            os.system("omxplayer /home/pi/hazard.mp4 ")
-                            ccp()
-                            print("HazardLightSwitch pushed @", message.timestamp)
-                            #record footage if hazard lights activated 
-                            #os.system("raspivid -t 5000 -rot 180 -o hazards_activated.mp4")
-                            
-                        else:
-                            pass
+            
     try:
         while True:
             for i in range(8):
@@ -316,17 +172,65 @@ def main():
                 message = q.get()   
                 c = '{0:f},{1:d},'.format(message.timestamp,count)
 
-                if message.arbitration_id == SWC:     
-                    SteeringWheelControls()
-                    
-                elif message.arbitration_id == ICC:
-                    InteriorCommandCentre()
-                    
-                elif message.arbitration_id == BEM:               
-                    BodyControlSwitches()
-                
-                else:
-                    pass         
+                if message.arbitration_id == SWC and message.data[6] in AUX:
+                    if message.arbitration_id == SWC and message.data[7] in SWC_SEEK: 
+                        #device.emit_click(uinput.KEY_N)
+                        ccp()
+                        print("SWCSeekBtn pushed @", message.timestamp) 
+                        # AUX SEEK FUNCTION HERE
+
+                    elif message.arbitration_id == SWC and message.data[7] in SWC_VOLUP:
+                        #device.emit_click(uinput.KEY_VOLUMEUP) #volup openauto
+                        time.sleep(0.2)
+                        ccp()
+                        print("SWCVolUpBtn pushed @", message.timestamp)
+                        # AUX VOL + FUNCTION
+
+                    elif message.data[7] in SWC_VOLDOWN:
+                        #device.emit_click(uinput.KEY_VOLUMEDOWN) #voldown openauto
+                        ccp()
+                        print("SWCVolDownBtn pushed @", message.timestamp)
+                        # AUX  VOL - FUNCTION        
+                    elif message.arbitration_id == SWC and message.data[6] in SWC_PHONE:
+                        #device.emit_click(uinput.KEY_F) #opendash cycle pages
+                        ccp()
+                        print("SWCPhoneBtn pushed @", message.timestamp)        
+                    else:
+                        pass
+
+                elif message.arbitration_id == SWC and message.data[6] in RADIO:
+                    if message.arbitration_id == SWC and message.data[7] in SWC_SEEK: 
+                        #device.emit_click(uinput.KEY_N)
+                        ccp()
+                        print("SWCSeekBtn pushed @", message.timestamp) 
+                        # RADIO SEEK FUNCTION HERE
+
+                    elif message.arbitration_id == SWC and message.data[7] in SWC_VOLUP:
+                        #device.emit_click(uinput.KEY_VOLUMEUP) #volup openauto
+                        time.sleep(0.2)
+                        ccp()
+                        print("SWCVolUpBtn pushed @", message.timestamp)
+                        # RADIO VOL + FUNCTION
+
+                    elif message.data[7] in SWC_VOLDOWN:
+                        #device.emit_click(uinput.KEY_VOLUMEDOWN) #voldown openauto
+                        ccp()
+                        print("SWCVolDownBtn pushed @", message.timestamp)
+                        # RADIO  VOL - FUNCTION        
+                    elif message.arbitration_id == SWC and message.data[6] in SWC_PHONE:
+                        #device.emit_click(uinput.KEY_F) #opendash cycle pages
+                        ccp()
+                        print("SWCPhoneBtn pushed @", message.timestamp)        
+             
+                    else:
+                        pass
+                elif message.arbitration_id == SWC and message.data[6] in PHONE:
+                    pass
+                else: 
+                    pass   
+                        
+             
+       
                                                                            
     except KeyboardInterrupt:
         sys.exit(0)                                              # quit if ctl + c is hit
