@@ -16,7 +16,7 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
 
  --  [Relevant ICC Diagrams + Pinouts](https://github.com/jakka351/FG-Falcon/wiki/Interior-Command-Centre)  
     
-  ***
+![image](https://user-images.githubusercontent.com/57064943/163714778-8598c24a-6ae2-49f6-ba4c-42de94dfa025.png)
 ### Hardware
 
  **Vehicle:** FG Falcon mk1   
@@ -33,10 +33,9 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
 <p align="center">
 <img src="https://raw.githubusercontent.com/jakka351/can0swc/main/canpii.jpg" width="300" height="425"> 
   <br/><img src="https://raw.githubusercontent.com/jakka351/can0swc/main/test%20(1).jpg" width="325" height="425" /> 
-</p><br/>
+</p><br/>  
   
-***  
-  
+![image](https://user-images.githubusercontent.com/57064943/163714778-8598c24a-6ae2-49f6-ba4c-42de94dfa025.png)
 ### Installation, Dependencies & Config
        
    #### Edit  
@@ -113,10 +112,10 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
 | `754`   | 8 bytes | Phone  | x| x | x | x | x | x | 0x61** | x |  
 | `748`   | 8 bytes | Mode  | x| x | x | x | x | x | 0x10 | x |  
 
-***
+
 *+1 depending on audio mode  
 **65 or 68 depending on audio mode  
-***
+![image](https://user-images.githubusercontent.com/57064943/163714778-8598c24a-6ae2-49f6-ba4c-42de94dfa025.png)
   
   ### Use in Different Vehicles  
   There is a templated version of the script that can be used to make your own version of can0swc, named as 'template.py'. 
@@ -126,4 +125,5 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
    -- [Webjocke canbus to keypress](https://github.com/webjocke/Python-CAN-bus-to-Keypresses) 
    
 ![](https://www.raspberrypi.org/app/uploads/2017/06/Powered-by-Raspberry-Pi-Logo_Outline-Colour-Screen-500x153.png)  
-***
+
+![image](https://user-images.githubusercontent.com/57064943/163714778-8598c24a-6ae2-49f6-ba4c-42de94dfa025.png)
