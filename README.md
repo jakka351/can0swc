@@ -96,13 +96,13 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
         `sudo python3 ./can0swc.py`  
         
        
-    
+![image](https://user-images.githubusercontent.com/57064943/163714778-8598c24a-6ae2-49f6-ba4c-42de94dfa025.png)
   ### Wiring Diagrams
   
   <img src="https://github.com/jakka351/FG-Falcon/blob/master/resources/images/36042a635002807104849f240acc63e5.jpg" width="600" height="600" />    
   <img src="https://raw.githubusercontent.com/jakka351/FG-Falcon/master/resources/images/plug_dlc.png" width="600" height="600" /> 
 
-
+![image](https://user-images.githubusercontent.com/57064943/163714778-8598c24a-6ae2-49f6-ba4c-42de94dfa025.png)
   ### CAN Data  
 
    | Address | Data    | Function | Byte1      | Byte2      | Byte3 | Byte4 | Byte5 | Byte6 | Byte7   | Byte8   |
@@ -121,6 +121,8 @@ SWC are resistance based, all switches run on a single wire, pushing a button ca
   
   ### Use in Different Vehicles  
   There is a templated version of the script that can be used to make your own version of can0swc, named as 'template.py'. 
+
+![image](https://user-images.githubusercontent.com/57064943/163714778-8598c24a-6ae2-49f6-ba4c-42de94dfa025.png)
     
   ###  Based upon:  
    -- [Python-CAN PiCAN2 Examples](https://github.com/jakka351/FG-Falcon/tree/master/resources/software/pythoncan)   
