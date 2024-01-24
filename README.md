@@ -1,4 +1,4 @@
-
+![image](https://user-images.githubusercontent.com/57064943/163714778-8598c24a-6ae2-49f6-ba4c-42de94dfa025.png)
 # [`can0swc`](https://github.com/jakka351/can0swc)    
 
 <a href="https://testerpresent.com.au/"><img src="https://img.shields.io/badge/Tester Present -Specialist Automotive Solutions-blue" /></a>  
@@ -6,7 +6,7 @@
 <img align="center" src="https://raw.githubusercontent.com/jakka351/FG-Falcon/master/resources/can0swc.gif" />
     
   ### `Steering Wheel Controls adaptor for mk1 FG`
-  ***
+  ![image](https://user-images.githubusercontent.com/57064943/163714778-8598c24a-6ae2-49f6-ba4c-42de94dfa025.png)
   Uses the python-can library to listen for pushes of steering wheel buttons, which are visible on the Falcon's mid-speed controller area network with CAN ID 0x2F2. Also listens for ICC button pushes on CAN ID 0x2FC and BEM functions on 0x307.
     When a button is pushed, the script emulates a keypress on the Raspberry Pi. This is used here with [OpenDash's](https://github.com/opendsh/dash) implementation of Android Auto emulator [Openauto]() to control basic media functions. The Car used is an Ford FG mk1 Falcon. The factory display from the vehicle has been replaced with a Raspberry Pi 7 Inch Touchscreen.    
   
